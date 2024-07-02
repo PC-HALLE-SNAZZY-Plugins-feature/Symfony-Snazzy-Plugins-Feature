@@ -24,7 +24,7 @@ class CategoryType extends AbstractType
                 new NotBlank(['message' => 'Category Name cannot be blank']),
             ],
             'label'      => 'Name',
-            'label_attr' => ['class' => 'block text-sm font-medium text-gray-100 mb-2'],
+            'label_attr' => ['class' => 'block text-sm font-medium text-gray-900 mb-2'],
         ])
         ->add('submit', SubmitType::class, [
             'attr'  => ['class' => 'w-full md:w-1/2 xl:w-1/4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none transition-colors mb-3'],

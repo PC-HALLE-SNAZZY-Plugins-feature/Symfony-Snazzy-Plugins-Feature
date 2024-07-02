@@ -45,18 +45,29 @@ class CategoryController extends AbstractController
             }
         }
 
-        $num_of_elements = 3;
 
-        $categories = $paginator->paginate(
-            $this->categoryRepository->findAll(),
-            $request->query->getInt('page', 1),
-            $num_of_elements
-        );
+        $num_of_elements = 5;
+
+        if ($request->request->get('_keyword')) {
+            $categories = $paginator->paginate(
+                $this->categoryRepository->findBySearchTerm($request->request->get('_keyword')),
+                $request->query->getInt('page', 1),
+                $num_of_elements
+            );
+        } else {
+            $categories = $paginator->paginate(
+                $this->categoryRepository->findAllDesc(),
+                $request->query->getInt('page', 1),
+                $num_of_elements
+            );
+        }
+
+
 
         return $this->render('category/index.html.twig', [
             'form'            => $form->createView(),
             'categories'      => $categories,
-            'num_of_elements' => $num_of_elements,
+            'num_of_elements' => count($categories),
         ]);
     }
 
