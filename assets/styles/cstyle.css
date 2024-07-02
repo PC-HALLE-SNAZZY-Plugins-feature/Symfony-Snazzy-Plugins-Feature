@@ -1,0 +1,239 @@
+.slider {
+    display: flex;
+    overflow-x: auto;
+    transition: scroll 0.5s ease-in-out;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.slide {
+    width: 170px;
+    flex-shrink: 0;
+    margin-right: 10px;
+    transition: width 0.5s ease;
+}
+
+.slide.active {
+    width: 600px !important;
+    transition: width 0.5s ease;
+}
+
+.slide .slide-content {
+    width: 100% !important;
+    height: 100% !important;
+    justify-content: space-between;
+    padding: 5%;
+}
+
+.slide .slide-content a {
+    align-self: flex-end;
+}
+
+.slide.active .slide-content a {
+    align-self: flex-start;
+}
+
+.slide.active .slide-content {
+    width: 50%;
+    height: fit-content;
+    justify-content: center;
+    padding: 0%;
+}
+
+.slide.active .slide-content p {
+    display: block !important;
+}
+
+@media (max-width:768px) {
+    .slide.active {
+        width: 100% !important;
+    }
+
+    .slide {
+        width: 120px;
+    }
+
+    .slide .slide-content {
+        padding: 2%;
+
+    }
+}
+
+.rightBtnSlide {
+    display: none;
+}
+
+@media (min-width: 768px) {
+
+    .slides_carousel:hover .rightBtnSlide {
+        display: block !important;
+    }
+}
+
+
+
+
+.card {
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Added transform to the transition */
+  }
+  
+  .card:hover {
+    box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
+    transform: scale(1.05); /* Slight scale increase on hover */
+  }
+
+
+  /* details */
+
+  #plugin-container {
+    background-size: 100% 30%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 6rem;
+}
+
+#cardplugin {
+    display: flex;
+    margin: 1rem;
+    margin-bottom: 2.5rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.Icon {
+    width: 10rem;
+    height: 10rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.text-gray-600 {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.carousel {
+    width: 500px;
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-image.active {
+    left: 0;
+}
+
+.carousel {
+    width: 90%;
+    max-width: 500px;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-image {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transition: left 0.5s ease;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 60px;
+    flex-shrink: 0;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail:hover,
+.thumbnail.active {
+    opacity: 1;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 0;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-100px);
+    }
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(100%);
+    }
+}
+
+.fade-in {
+    animation: fade-in 0.9s ease;
+}
+
+.fade-out {
+    animation: fade-out 0.9s ease;
+}
+
+.slide-up {
+    animation: slide-up 0.9s ease;
+}
+
+.slide-down {
+    animation: slide-down 0.9s ease;
+}
+
+.SimilarPluginssliders {
+    display: flex;
+    overflow-x: auto;
+    transition: scroll 0.5s ease-in-out;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.Pluginsslide {
+    width: 170px;
+    flex-shrink: 0;
+    margin-right: 10px;
+    transition: width 0.5s ease;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.10);
+}

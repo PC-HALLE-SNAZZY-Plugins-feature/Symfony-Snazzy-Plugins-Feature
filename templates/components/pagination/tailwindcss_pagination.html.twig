@@ -1,0 +1,31 @@
+{# templates/pagination/custom_tailwind_pagination.html.twig #}
+
+{% if pageCount > 1 %}
+    <nav>
+        <ul class="pagination flex items-center justify-center space-x-1 text-xs">
+            {% if previous is defined %}
+                <li>
+                    <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Previous</a>
+                </li>
+            {% endif %}
+
+            {% for page in pagesInRange %}
+                {% if page != current %}
+                    <li>
+                        <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">{{ page }}</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <span class="px-2 py-1 bg-blue-500 text-white rounded">{{ page }}</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if next is defined %}
+                <li>
+                    <a href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
