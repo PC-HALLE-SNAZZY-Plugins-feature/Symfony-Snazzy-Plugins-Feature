@@ -1,0 +1,530 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Plugins Catedories
+{% endblock %}
+
+{% block body %}
+
+
+	<!-- Start Content -->
+
+
+	<div id="plugin-container" class=" flex flex-wrap flex-col md:flex-row items-center justify-start">
+		<div id="cardplugin" class="flex flex-col lg:flex-row m-[1rem] lg:space-x-6 p-5 md:p-10 justify-start items-start">
+			{% if plugin.imageName %}
+				<div
+					class="w-40 flex-shrink-0">
+					<!-- Fixed width and prevent shrinking -->
+					<img src="{{ vich_uploader_asset(plugin, 'imageFile') }}" alt="Icon" id="Icon" class="Icon w-40 h-40 object-cover">
+					<h1 class="text-xl font-bold">{{ plugin.name }}</h1>
+				</div>
+			{% endif %}
+			<div
+				class="flex-1">
+				<!-- Flex item takes remaining space -->
+				<p class="text-gray-600 text-xs md:text-lg md:w-70 break-words whitespace-normal">
+					{{ plugin.description|slice(0, 100) }}
+					{% if plugin.description|length > 100 %}
+						...
+					{% endif %}
+
+				</p>
+				<div class="flex justify-between items-center mt-5">
+					<div class="flex items-center">
+						<h1 class="text-gray-400 text-lg mx-3">
+							<i class="fa-solid fa-download"></i>
+							25 k
+						</h1>
+						<h1 class="mb-2 text-2xl text-gray-700">
+							4.5
+							<span class="text-yellow-500">★</span>
+						</h1>
+					</div>
+					<button class="px-3 py-1 bg-black text-white rounded">Install</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!--Slides section-->
+
+	<div id="Screenshotscarousse" class="   flex flex-col items-center">
+
+		<div class="carousel lg:mb-10 ">
+			{% for screenshot in plugin.screenShots %}
+				<div class="screenshot">
+					{% if screenshot.imageName %}
+						<img src="{{ vich_uploader_asset(screenshot, 'imageFile') }}" alt="Image 1" class="carousel-image  absolute border rounded top-0  ">
+					{% else %}
+						<p>No image available</p>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class="thumbnails   flex justify-center  md-ml-90   mb-5" style="overflow-x: scroll;">
+			{% for screenshot in plugin.screenShots %}
+				<img src="{{ vich_uploader_asset(screenshot, 'imageFile') }}" alt="Thumbnail {{ loop.index0 }}" class="thumbnail w-24 h-16 border rounded mx-2 cursor-pointer opacity-60" data-index="{{ loop.index0 }}">
+			{% endfor %}
+		</div>
+	</div>
+
+	<div
+		class="lg:px-10">
+		<!-- Description Section -->
+		<div class="container mx-auto p-2">
+			<div class=" w-full bg-gray-100 hover:bg-gray-200 py-1 pl-4 transition-all duration-100 rounded-lg mb-1">
+				<div class="text-black  font-italic text-xl flex items-center gap-2 ">
+					Description
+					<img src="{{ asset('images/svg/move-to-page-icon-black.svg') }}" class="text-black w-4 h-4" alt="  Plugins">
+				</div>
+			</div>
+			<div class="p-2 border rounded-lg ">
+				<p class="text-sm text-gray-600">
+					{{ plugin.description|slice(0, 500) }}
+					{% if plugin.description|length > 500 %}
+						...
+					{% endif %}
+				</p>
+			</div>
+		</div>
+		<!-- Rating Section -->
+		<div class="container mx-auto p-2">
+			<div class=" w-full bg-gray-100 hover:bg-gray-200 py-1 pl-4 transition-all duration-100 rounded-lg mb-1">
+				<div class="text-black  font-italic text-xl flex items-center gap-2 ">
+					Rating
+					<img src="{{ asset('images/svg/move-to-page-icon-black.svg') }}" class="text-black w-4 h-4" alt="  Plugins">
+				</div>
+			</div>
+			<div class=" border rounded-lg">
+				<div class="p-2 ml-10  flex flex-col md:flex-row items-stretch   ">
+					<div class="mt-6 md:mt-0 md:w-1/3 flex flex-col justify-center">
+						<h1 class="mb-2 text-6xl">4.5
+							<span class="text-yellow-500">★</span>
+						</h1>
+						<p class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">1,745 Total ratings</p>
+					</div>
+
+					<div class="mt-4 md:mt-0 md:ml-6 md:w-4/5 flex flex-col justify-center">
+						<div class="flex items-center mt-2">
+							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">5
+								<span class="text-yellow-500">★</span>
+							</a>
+							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: 70%"></div>
+							</div>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">70%</span>
+						</div>
+						<div class="flex items-center mt-2">
+							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">4
+								<span class="text-yellow-500">★</span>
+							</a>
+							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: 50%"></div>
+							</div>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">50%</span>
+						</div>
+						<div class="flex items-center mt-2">
+							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">3
+								<span class="text-yellow-500">★</span>
+							</a>
+							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: 8%"></div>
+							</div>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">8%</span>
+						</div>
+						<div class="flex items-center mt-2">
+							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">2
+								<span class="text-yellow-500">★</span>
+							</a>
+							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: 4%"></div>
+							</div>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">4%</span>
+						</div>
+						<div class="flex items-center mt-2">
+							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">1
+								<span class="text-yellow-500">★</span>
+							</a>
+							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: 1%"></div>
+							</div>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">1%</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="p-2  ">
+					<div class=" ml-2 mr-3 flex items-start mb-1">
+						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/6.jpg" alt="avatar">
+						<div>
+							<div class="flex items-center mb-2">
+								<h2 class="text-lg font-semibold text-black dark:text-white mt-1">Jean</h2>
+								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">40 minutes ago</span>
+							</div>
+							<span class="ml-2 text-yellow-500">★★★★★</span>
+							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
+																																																                                variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																                                form, by injected humour																																																																	                      There are many variations of passages of Lorem Ipsum available,</p>
+							<div class="flex items-center mt-2"></div>
+						</div>
+					</div>
+
+				</div>
+				<div class="moreComment hidden">
+					<div class=" ml-3 mr-3 flex items-start mb-4">
+						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/8.jpg" alt="avatar">
+						<div>
+							<div class="flex items-center mb-2">
+								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
+								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">6 minutes ago</span>
+							</div>
+							<span class="ml-2 text-yellow-500">★★★☆☆</span>
+							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
+																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																								                      form, by injected humour
+																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+							<div class="flex items-center mt-2"></div>
+						</div>
+					</div>
+					<div class=" ml-3 mr-3 flex items-start mb-4">
+						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/1.jpg" alt="avatar">
+						<div>
+							<div class="flex items-center mb-2">
+								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
+								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">10 seconds ago</span>
+							</div>
+							<span class="ml-2 text-yellow-500">★★★★☆</span>
+							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
+																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																								                      form, by injected humour
+																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+							<div class="flex items-center mt-2"></div>
+						</div>
+					</div>
+					<div class=" ml-3 mr-3 flex items-start mb-4">
+						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/3.jpg" alt="avatar">
+						<div>
+							<div class="flex items-center mb-2">
+								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
+								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">1 hours ago</span>
+							</div>
+							<span class="ml-2 text-yellow-500">★★★★☆</span>
+							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
+																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																								                      form, by injected humour
+																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+							<div class="flex items-center mt-2"></div>
+						</div>
+					</div>
+					<div class=" ml-3 mr-3 flex items-start mb-4">
+						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/8.jpg" alt="avatar">
+						<div>
+							<div class="flex items-center mb-2">
+								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
+								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">30 minutes ago</span>
+							</div>
+							<span class="ml-2 text-yellow-500">★★★★☆</span>
+							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
+																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																								                      form, by injected humour
+																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+							<div class="flex items-center mt-2"></div>
+						</div>
+					</div>
+					<div class=" ml-3 mr-3 flex items-start mb-4">
+						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/4.jpg" alt="avatar">
+						<div>
+							<div class="flex items-center mb-2">
+								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
+								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">12 minutes ago</span>
+							</div>
+							<span class="ml-2 text-yellow-500">★★★★☆</span>
+							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
+																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																								                      form, by injected humour
+																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+							<div class="flex items-center mt-2"></div>
+						</div>
+					</div>
+					<div class=" ml-3 mr-3 flex items-start mb-4">
+						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/7.jpg" alt="avatar">
+						<div>
+							<div class="flex items-center mb-2">
+								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
+								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">34 minutes ago</span>
+							</div>
+							<span class="ml-2 text-yellow-500">★★★★☆</span>
+							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
+																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																								                      form, by injected humour
+																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+							<div class="flex items-center mt-2"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="p-2">
+					<button id="see-more-comments" class="text-blue-500">See more</button>
+				</div>
+				<div class="p-2">
+					<button id="hidde-comments" class="text-blue-500 hidden">See less</button>
+				</div>
+
+			</div>
+		</div>
+		<!-- Functionality Section -->
+		<div class="container mx-auto p-2">
+			<div class=" w-full bg-gray-100 hover:bg-gray-200 py-1 pl-4 transition-all duration-100 rounded-lg mb-1">
+				<div class="text-black  font-italic text-xl flex items-center gap-2 ">
+					Functionality
+					<img src="{{ asset('images/svg/move-to-page-icon-black.svg') }}" class="text-black w-4 h-4" alt="  Plugins">
+				</div>
+			</div>
+			<div class="p-2 border rounded-lg mb-4">
+				<p class="text-sm text-gray-600">There are many variations of passages of Lorem Ipsum available, but the
+																														                majority have suffered alteration in some form, by injected humour
+																														                There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+																														                alteration in some form, by injected humour
+																														                There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+																														                alteration in some form, by injected humour.</p>
+			</div>
+		</div>
+		<!-- Similar Plugins Section -->
+		<div class="container mx-auto p-2">
+			<div class=" w-full bg-gray-100 hover:bg-gray-200 py-1 pl-4 transition-all duration-100 rounded-lg mb-1">
+				<div class="text-black  font-italic text-xl flex items-center gap-2 ">
+					Similar Plugins
+					<img src="{{ asset('images/svg/move-to-page-icon-black.svg') }}" class="text-black w-4 h-4" alt="  Plugins">
+				</div>
+			</div>
+
+			<div class="SimilarPluginssliders" style="width:100%;  overflow-x: scroll;">
+				<div class="flex transition-transform duration-500 ease-in-out" id="carousel">
+					<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-4 my-6">
+						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.5chsv8aD5xQeK02HUXPqLQHaEK?rs=1&pid=ImgDetMain);"></div>
+							<div class="flex flex-grow">
+								<div class="triangle"></div>
+								<div class="flex flex-col justify-between  pb-3 bg-white ">
+									<div>
+										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																				                            Schemas</a>
+										<p class="block  text-xs leading-tight  text-gray-400 ">
+											What Zombies Can Teach You About Food</p>
+
+									</div>
+									<div class="flex justify-between">
+										<div class="flex items-end gap-1">
+											<div class="flex h-full justify-start items-end gap-1">
+												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<span class=" text-gray-400 text-xs p-0">54k</span>
+											</div>
+										</div>
+										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://i0.wp.com/eobasi.com/wp-content/uploads/2018/05/install-oxwall-plugins.png?resize=768%2C379&ssl=1);"></div>
+							<div class="flex flex-grow">
+								<div class="triangle"></div>
+								<div class="flex flex-col justify-between  pb-3 bg-white ">
+									<div>
+										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																				                            Schemas</a>
+										<p class="block  text-xs leading-tight  text-gray-400 ">
+											What Zombies Can Teach You About Food</p>
+
+									</div>
+									<div class="flex justify-between">
+										<div class="flex items-end gap-1">
+											<div class="flex h-full justify-start items-end gap-1">
+												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<span class=" text-gray-400 text-xs p-0">54k</span>
+											</div>
+										</div>
+										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://wpshuffle.com/wp-content/uploads/2021/04/how-to-install-plugin.jpg);"></div>
+							<div class="flex flex-grow">
+								<div class="triangle"></div>
+								<div class="flex flex-col justify-between  pb-3 bg-white ">
+									<div>
+										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																				                            Schemas</a>
+										<p class="block  text-xs leading-tight  text-gray-400 ">
+											What Zombies Can Teach You About Food</p>
+
+									</div>
+									<div class="flex justify-between">
+										<div class="flex items-end gap-1">
+											<div class="flex h-full justify-start items-end gap-1">
+												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<span class=" text-gray-400 text-xs p-0">54k</span>
+											</div>
+										</div>
+										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://user-meta.com/wp-content/blogs.dir/2/files/2022/12/How-to-upload-wordpress-plugin-1.png);"></div>
+							<div class="flex flex-grow">
+								<div class="triangle"></div>
+								<div class="flex flex-col justify-between  pb-3 bg-white ">
+									<div>
+										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																				                            Schemas</a>
+										<p class="block  text-xs leading-tight  text-gray-400 ">
+											What Zombies Can Teach You About Food</p>
+
+									</div>
+									<div class="flex justify-between">
+										<div class="flex items-end gap-1">
+											<div class="flex h-full justify-start items-end gap-1">
+												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<span class=" text-gray-400 text-xs p-0">54k</span>
+											</div>
+										</div>
+										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.t5ZjYXXhiZjXmZnA2-ZM9QHaEK?w=1280&h=720&rs=1&pid=ImgDetMain);"></div>
+							<div class="flex flex-grow">
+								<div class="triangle"></div>
+								<div class="flex flex-col justify-between  pb-3 bg-white ">
+									<div>
+										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																				                            Schemas</a>
+										<p class="block  text-xs leading-tight  text-gray-400 ">
+											What Zombies Can Teach You About Food</p>
+
+									</div>
+									<div class="flex justify-between">
+										<div class="flex items-end gap-1">
+											<div class="flex h-full justify-start items-end gap-1">
+												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<span class=" text-gray-400 text-xs p-0">54k</span>
+											</div>
+										</div>
+										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.04yES9crX5XfEkXoTqgQSgHaHt?rs=1&pid=ImgDetMain);"></div>
+							<div class="flex flex-grow">
+								<div class="triangle"></div>
+								<div class="flex flex-col justify-between  pb-3 bg-white ">
+									<div>
+										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																				                            Schemas</a>
+										<p class="block  text-xs leading-tight  text-gray-400 ">
+											What Zombies Can Teach You About Food</p>
+
+									</div>
+									<div class="flex justify-between">
+										<div class="flex items-end gap-1">
+											<div class="flex h-full justify-start items-end gap-1">
+												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<span class=" text-gray-400 text-xs p-0">54k</span>
+											</div>
+										</div>
+										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/R.b3a46e6760afe03b45f87b841402ea2b?rik=pGG3sg9kQ6loew&pid=ImgRaw&r=0);"></div>
+							<div class="flex flex-grow">
+								<div class="triangle"></div>
+								<div class="flex flex-col justify-between  pb-3 bg-white ">
+									<div>
+										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																				                            Schemas</a>
+										<p class="block  text-xs leading-tight  text-gray-400 ">
+											What Zombies Can Teach You About Food</p>
+
+									</div>
+									<div class="flex justify-between">
+										<div class="flex items-end gap-1">
+											<div class="flex h-full justify-start items-end gap-1">
+												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<span class=" text-gray-400 text-xs p-0">54k</span>
+											</div>
+										</div>
+										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/R.b3a46e6760afe03b45f87b841402ea2b?rik=pGG3sg9kQ6loew&pid=ImgRaw&r=0);"></div>
+							<div class="flex flex-grow">
+								<div class="triangle"></div>
+								<div class="flex flex-col justify-between  pb-3 bg-white ">
+									<div>
+										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																				                            Schemas</a>
+										<p class="block  text-xs leading-tight  text-gray-400 ">
+											What Zombies Can Teach You About Food</p>
+
+									</div>
+									<div class="flex justify-between">
+										<div class="flex items-end gap-1">
+											<div class="flex h-full justify-start items-end gap-1">
+												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<span class=" text-gray-400 text-xs p-0">54k</span>
+											</div>
+										</div>
+										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+<script>
+	document.addEventListener('DOMContentLoaded', (event) => {
+const deleteLabel = document.querySelector('label[for$="_imageFile_delete"]');
+if (deleteLabel) {
+deleteLabel.textContent = 'Delete image';
+deleteLabel.classList.add('custom-delete-label', 'text-gray-100');
+}
+});
+</script>{% endblock %}{% block javascripts %}
+
+<script src="{{ asset('js/details.js') }}?v=1.0"></script>{% endblock %}

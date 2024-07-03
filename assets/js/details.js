@@ -75,19 +75,19 @@ function getDominantColor(img) {
     return [dominantColor, rgbColor];
 }
 
-function setupStickyHeader() {
-    window.addEventListener('scroll', () => {
-        const pluginContainer = document.getElementById('plugin-container');
-        const stickyHeader = document.getElementById('sticky-header');
-        const stickyPoint = pluginContainer.offsetTop + pluginContainer.offsetHeight;
+// function setupStickyHeader() {
+//     window.addEventListener('scroll', () => {
+//         const pluginContainer = document.getElementById('plugin-container');
+//         const stickyHeader = document.getElementById('sticky-header');
+//         const stickyPoint = pluginContainer.offsetTop + pluginContainer.offsetHeight;
 
-        if (window.pageYOffset > stickyPoint) {
-            stickyHeader.style.display = 'flex';
-        } else {
-            stickyHeader.style.display = 'none';
-        }
-    });
-}
+//         if (window.pageYOffset > stickyPoint) {
+//             stickyHeader.style.display = 'flex';
+//         } else {
+//             stickyHeader.style.display = 'none';
+//         }
+//     });
+// }
 
 
 
