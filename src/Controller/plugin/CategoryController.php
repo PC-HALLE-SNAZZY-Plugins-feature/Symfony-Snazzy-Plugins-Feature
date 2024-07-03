@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\plugin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
@@ -25,10 +25,10 @@ class CategoryController extends AbstractController
 
     /**
      * ? in this Function we can add, see all the categories
-     * ? @Route("/plugin/category", name="app_category").
+     * ? @Route("/plugin/category", name="app_plugin_category").
      */
 
-    #[Route('/plugin/category', name: 'app_category')]
+    #[Route('/plugin/category', name: 'app_plugin_category')]
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
         $category = new Category();
@@ -44,7 +44,6 @@ class CategoryController extends AbstractController
                 $this->addFlash('error', 'Category Creation Failed');
             }
         }
-
 
         $num_of_elements = 5;
 
@@ -62,8 +61,6 @@ class CategoryController extends AbstractController
             );
         }
 
-
-
         return $this->render('category/index.html.twig', [
             'form'            => $form->createView(),
             'categories'      => $categories,
@@ -72,30 +69,11 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * ? in this Function we can delete the category
-     * ? @Route("plugin/category/delete/{id}", name="category_delete").
-     */
-
-    #[Route('plugin/category/delete/{id}', name: 'app_category_delete')]
-    public function delete(Category $category): Response
-    {
-        try {
-            $this->entityManager->remove($category);
-            $this->entityManager->flush();
-            $this->addFlash('success', 'Category Deleted Successfully');
-        } catch (\Exception $e) {
-            $this->addFlash('error', 'Category Deletion Failed');
-        }
-
-        return $this->redirectToRoute('app_category');
-    }
-
-    /**
      * ? in this Function we can edit the category
-     * ? @Route("/category/edit/{id}", name="app_category_edit").
+     * ? @Route("/category/edit/{id}", name="app_plugin_category_edit").
      */
 
-    #[Route('/category/edit/{id}', name: 'app_category_edit')]
+    #[Route('/category/edit/{id}', name: 'app_plugin_category_edit')]
     public function edit(Category $category, Request $request): Response
     {
         $form = $this->createForm(CategoryType::class, $category);
@@ -106,11 +84,11 @@ class CategoryController extends AbstractController
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Category Updated Successfully');
 
-                return $this->redirectToRoute('app_category');
+                return $this->redirectToRoute('app_plugin_category');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Category Update Failed');
 
-                return $this->redirectToRoute('app_category');
+                return $this->redirectToRoute('app_plugin_category');
             }
         }
 
@@ -118,4 +96,23 @@ class CategoryController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * ? in this Function we can delete the category
+     * ? @Route("plugin/category/delete/{id}", name="category_delete").
+     */
+
+     #[Route('plugin/category/delete/{id}', name: 'app_plugin_category_delete')]
+     public function delete(Category $category): Response
+     {
+         try {
+             $this->entityManager->remove($category);
+             $this->entityManager->flush();
+             $this->addFlash('success', 'Category Deleted Successfully');
+         } catch (\Exception $e) {
+             $this->addFlash('error', 'Category Deletion Failed');
+         }
+ 
+         return $this->redirectToRoute('app_plugin_category');
+     }
 }
