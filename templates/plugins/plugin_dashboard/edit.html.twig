@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Plugin
+{% endblock %}
+
+{% block body %}
+	<div class="container my-10">
+		<div class="lg:px-20">
+			{{ form_start(form) }}
+
+			<div>
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name) }}
+				<div class="text-red-600 py-2">
+					{{ form_errors(form.name) }}
+				</div>
+			</div>
+
+			<div>
+				{{ form_label(form.description) }}
+				{{ form_widget(form.description) }}
+				<div class="text-red-600 py-2">
+					{{ form_errors(form.description) }}
+				</div>
+			</div>
+
+			<div>
+				{{ form_label(form.category) }}
+				{{ form_widget(form.category) }}
+				<div class="text-red-600 py-2">
+					{{ form_errors(form.category) }}
+				</div>
+			</div>
+
+			<div>
+				{{ form_label(form.dashboard_path) }}
+				{{ form_widget(form.dashboard_path) }}
+				<div class="text-red-600 py-2">
+					{{ form_errors(form.dashboard_path) }}
+				</div>
+			</div>
+
+			{# <div class="credentials-form-fields-collection" data-prototype="{{ form_widget(form.credentials_form_fields.vars.prototype)|e('html_attr') }}">
+			                {{ form_label(form.credentials_form_fields) }}
+			                <button type="button" class="add_credentials_form_field_link w-full px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none transition-colors my-2">Add a credential field</button>
+			                
+			                {% for credentialField in form.credentials_form_fields %}
+			                    <div class="form-group flex gap-4  items-center">
+			                        {{ form_widget(credentialField, {
+			                            'attr': {
+			                                'class': 'form-control relative block w-full appearance-none rounded-md border border-gray-300 mb-2 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+			                            }
+			                        }) }}
+									<img src="{{ asset('images/svg/delete.svg') }}" class="delete-field w-6 h-10 mb-2" alt="delete">
+			                    </div>
+			                {% endfor %}
+			                
+			                
+			                {% if form_errors(form.credentials_form_fields) %}
+			                    <div class="text-red-600 py-2">
+			                        {{ form_errors(form.credentials_form_fields) }}
+			                    </div>
+			                {% endif %}
+			            </div> #}
+			<div>
+				{{ form_label(form.credentials_form_fields) }}
+				{{ form_widget(form.credentials_form_fields) }}
+				{% if form_errors(form.credentials_form_fields) %}
+					<div class="text-red-600 py-2">
+						{{ form_errors(form.credentials_form_fields) }}
+					</div>
+				{% endif %}
+
+			</div>
+			<div>
+				{{ form_label(form.setup) }}
+				{{ form_widget(form.setup) }}
+				<div class="text-red-600 py-2">
+					{{ form_errors(form.setup) }}
+				</div>
+			</div>
+
+			<div>
+				{{ form_label(form.imageFile) }}
+				{{ form_widget(form.imageFile) }}
+				<div class="text-red-600 py-2">
+					{{ form_errors(form.imageFile) }}
+				</div>
+			</div>
+
+			<div>
+				{{ form_label(form.screenShots) }}
+				{{ form_widget(form.screenShots) }}
+				<div class="text-red-600 py-2">
+					{{ form_errors(form.screenShots) }}
+				</div>
+			</div>
+
+			<div class="w-full flex items-center justify-end">
+				{{ form_widget(form.submit) }}
+			</div>
+
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+	{# <script>
+	        document.addEventListener('DOMContentLoaded', function () {
+	            const collectionHolder = document.querySelector('.credentials-form-fields-collection');
+	            
+	            // Function to handle adding new fields to a collection
+	            const handleAddField = () => {
+	                let prototype = collectionHolder.dataset.prototype;
+	                let index = collectionHolder.dataset.index;
+	                let newForm = prototype.replace(/__name__/g, index);
+	                collectionHolder.dataset.index = parseInt(index) + 1;
+	                
+	                let newFormLi = document.createElement('div');
+	                newFormLi.innerHTML = newForm;
+	                collectionHolder.appendChild(newFormLi);
+	            };
+	            
+	            // Add a new credential field
+	            const addButton = document.querySelector('.add_credentials_form_field_link');
+	            if (addButton) {
+	                addButton.addEventListener('click', handleAddField);
+	            }
+	            
+	            // Delete a credential field
+	            collectionHolder.addEventListener('click', function (event) {
+	                if (event.target && event.target.classList.contains('delete-field')) {
+	                    event.target.closest('.form-group').remove();
+	                }
+	            });
+	        });
+	    </script> #}
+{% endblock %}

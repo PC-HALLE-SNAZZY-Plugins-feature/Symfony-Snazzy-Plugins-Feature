@@ -29,7 +29,7 @@ class PluginType extends AbstractType
                     new NotBlank(['message' => 'Category Name cannot be blank']),
                 ],
                 'label'      => 'Name',
-                'label_attr' => ['class' => 'block text-sm font-medium text-gray-900 mb-2'],
+                'label_attr' => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],
             ])
             ->add('description', TextareaType::class, [
                 'required'    => false,
@@ -39,7 +39,17 @@ class PluginType extends AbstractType
                     'rows'        => 5,
                 ],
                 'label'      => 'Description',
-                'label_attr' => ['class' => 'block text-sm font-medium text-gray-900 mb-2'],
+                'label_attr' => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],
+            ])
+            ->add('setup', TextareaType::class, [
+                'required'    => false,
+                'attr'        => [
+                    'class'       => 'form-control relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm',
+                    'placeholder' => 'Steps to retrieve user credentials',
+                    'rows'        => 5,
+                ],
+                'label'      => 'Setup',
+                'label_attr' => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],
             ])
             ->add('imageFile', VichImageType::class, [
                 'required'       => false,
@@ -52,7 +62,7 @@ class PluginType extends AbstractType
                     'class' => 'form-control w-full bg-gray-600 block text-sm px-2 font-medium text-gray-100 mb-2',
                 ],
                 'label'      => 'Logo',
-                'label_attr' => ['class' => 'block text-sm font-medium text-gray-900 mb-2'],
+                'label_attr' => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],
             ])
             ->add('dashboard_path', TextType::class, [
                 'attr' => [
@@ -63,9 +73,9 @@ class PluginType extends AbstractType
                     new NotBlank(['message' => 'Dashboard Path cannot be blank']),
                 ],
                 'label'      => 'Dashboard Path',
-                'label_attr' => ['class' => 'block text-sm font-medium text-gray-900 mb-2'],
+                'label_attr' => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],
             ])
-            ->add('credentials_form_filds', CollectionType::class, [
+            ->add('credentials_form_fields', CollectionType::class, [
                 'entry_type'    => TextType::class,
                 'entry_options' => [
                     'attr' => [
@@ -74,19 +84,20 @@ class PluginType extends AbstractType
                     ],
                     'label' => false,
                 ],
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'prototype'    => true,
-                'label'        => 'Credentials Form Fields',
-                'label_attr'   => ['class' => 'block text-sm font-medium text-gray-900 mb-2'],
-                'attr'         => ['class' => 'credentials-form-fields-collection block text-sm font-medium text-gray-900 mb-3'],
+                'allow_add'     => true,
+                'allow_delete'  => true,
+                'delete_empty'  => true, 
+                'by_reference'  => false,
+                'prototype'     => true,
+                'label'         => 'Credentials Form Fields',
+                'label_attr'    => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],
+                'attr'          => ['class' => 'credentials-form-fields-collection block text-sm font-medium text-gray-900 mb-3'],
             ])
 
             ->add('category', EntityType::class, [
                 'class'         => Category::class,
                 'choice_label'  => 'name',
-                'label_attr'    => ['class' => 'block text-sm font-medium text-gray-900 mb-2'],
+                'label_attr'    => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],
                 'attr'          => [
                     'class'       => 'form-control relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm',
                     'placeholder' => 'Enter The Category Name',
@@ -100,7 +111,7 @@ class PluginType extends AbstractType
                 'by_reference'  => false,
                 'prototype'     => true,
                 'label'         => 'Screen Shots',
-                'label_attr'    => ['class' => 'block text-sm font-medium text-gray-900 mb-2'],
+                'label_attr'    => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],
                 'attr'          => ['class' => 'screenShots-collection'],
             ])
             ->add('submit', SubmitType::class, [

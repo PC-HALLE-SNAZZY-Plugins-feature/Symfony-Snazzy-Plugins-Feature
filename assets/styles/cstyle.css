@@ -74,19 +74,21 @@
 
 
 .card {
-    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Added transform to the transition */
-  }
-  
-  .card:hover {
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    /* Added transform to the transition */
+}
+
+.card:hover {
     box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
     -webkit-box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
-    transform: scale(1.05); /* Slight scale increase on hover */
-  }
+    transform: scale(1.05);
+    /* Slight scale increase on hover */
+}
 
 
-  /* details */
+/* details */
 
-  #plugin-container {
+#plugin-container {
     background-size: 100% 30%;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -95,8 +97,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    margin-bottom: 6rem;
+
 }
+
 
 .Icon {
     width: 10rem;
@@ -114,10 +117,34 @@
 }
 
 .carousel {
-    width: 500px;
-    height: 320px;
-    overflow: hidden;
-    position: relative;
+    height: 200px;
+    margin-bottom: 5px;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 568px) {
+    .carousel {
+        height: 250px;
+    }
+}
+
+@media (min-width: 768px) {
+    .carousel {
+        height: 300px;
+    }
+}
+
+/* Large devices (desktops, 1024px and up) */
+@media (min-width: 1024px) {
+    .carousel {
+        height: 300px;
+    }
+}
+
+@media (min-width: 1500px) {
+    .carousel {
+        height: 350px;
+    }
 }
 
 .carousel-image.active {
@@ -126,7 +153,7 @@
 
 .carousel {
     width: 90%;
-    max-width: 500px;
+    max-width: 675px;
     overflow: hidden;
     position: relative;
 }
@@ -227,4 +254,54 @@
     margin-right: 10px;
     transition: width 0.5s ease;
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.10);
+}
+
+
+.star-rating {
+    direction: rtl;
+    display: inline-block;
+    font-size: 2rem;
+    unicode-bidi: bidi-override;
+}
+.star-rating input {
+    display: none;
+}
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.star-rating input:checked ~ label {
+    color: gold;
+}
+.star-rating input:hover ~ label {
+    color: gold;
+}
+.star-rating label:hover ~ label {
+    color: gold;
+}
+
+/* zzzzzzzz */
+.star-button-rating {
+    direction: rtl;
+    display: inline-block;
+    font-size: 2rem;
+    unicode-bidi: bidi-override;
+}
+.star-button-rating button {
+    background: none;
+    border: none;
+    color: #ddd;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.3s;
+    position: relative;
+}
+.star-button-rating button:hover,
+.star-button-rating button:hover ~ button {
+    color: gold;
 }

@@ -1,4 +1,4 @@
-// plugin_form.js
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // Function to handle adding new fields to a collection
@@ -46,10 +46,36 @@ document.addEventListener('DOMContentLoaded', () => {
     if (screenShotsCollectionHolder) {
         handleAddField(screenShotsCollectionHolder, 'add_screenShot_link', 'Add a screen shot', 'screenshot');
     }
+  // Credentials Form Fields Collection
+  let credentialsCollectionHolder = document.querySelector('.credentials-form-fields-collection');
+  if (credentialsCollectionHolder) {
+      handleAddField(credentialsCollectionHolder, 'add_credentials_form_field_link', 'Add a credential field', 'credential');
+  }
 
-    // Credentials Form Fields Collection
-    let credentialsCollectionHolder = document.querySelector('.credentials-form-fields-collection');
-    if (credentialsCollectionHolder) {
-        handleAddField(credentialsCollectionHolder, 'add_credentials_form_field_link', 'Add a credential field', 'credential');
-    }
 });
+
+
+function handleDescriptionContent() {
+    let moreDescription = document.getElementById('more-plugin-description');
+    let lessDescription = document.getElementById('less-plugin-description');
+
+    if (moreDescription.classList.contains('hidden')) {
+        moreDescription.classList.remove('hidden');
+        lessDescription.classList.add('hidden');
+    } else {
+        moreDescription.classList.add('hidden');
+        lessDescription.classList.remove('hidden');
+    }
+}
+function handleSetUpContent() {
+    let moreSetup = document.getElementById('more-plugin-setup');
+    let lessSetup = document.getElementById('less-plugin-setup');
+
+    if (moreSetup.classList.contains('hidden')) {
+        moreSetup.classList.remove('hidden');
+        lessSetup.classList.add('hidden');
+    } else {
+        moreSetup.classList.add('hidden');
+        lessSetup.classList.remove('hidden');
+    }
+}

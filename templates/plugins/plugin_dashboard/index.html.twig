@@ -87,17 +87,17 @@
 									{{ plugin.name }}
 								</th>
 								<th scope="row" class="px-6 py-2 text-xs font-medium text-gray-600 dark:text-white w-full break-words whitespace-normal">
-									{{ plugin.description|slice(0, 300) }}
-									{% if plugin.description|length > 300 %}
+									{{ plugin.description|slice(0, 200) }}
+									{% if plugin.description|length > 200 %}
 										...
 									{% endif %}
 								</th>
 								<td class="px-2 py-4  flex justify-end">
-									<a href="{{ path('app_plugin_edit' , {id:plugin.id}) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Edit</a>
-									<a href="{{ path('app_plugin_delete' , {id:plugin.id}) }}" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</a>
-									<a href="{{ path('app_plugin_show' , {id:plugin.id}) }}" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 me-2 mb-2 dark:focus:ring-yellow-900">show</a>
+									<a href="{{ path('app_plugin_show' , {id:plugin.id}) }}" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 me-2 mb-2 dark:focus:ring-yellow-900">details</a>
+									<a href="{{ path(plugin.getDashboardPath()) }}" class="focus:outline-none text-white bg-green-400 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 me-2 mb-2 dark:focus:ring-green-900">dashboard</a>
+									<a href="{{ path('app_plugin_edit' , {id:plugin.id}) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">edit</a>
+									<a href="{{ path('app_plugin_delete' , {id:plugin.id}) }}" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">delete</a>
 								</td>
-
 							</tr>
 						{% endfor %}
 
@@ -126,7 +126,7 @@
 
 
 	<!-- Main modal -->
-	<div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+	<div id="crud-modal" tabindex="-1" aria-hidden="true" class="lg:ml-[113px] hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
 		<div
 			class="relative p-4 w-full max-w-xl max-h-full">
 			<!-- Modal content -->
@@ -176,16 +176,22 @@
 						</div>
 					</div>
 					<div>
-						{{ form_label(form.credentials_form_filds) }}
-						{{ form_widget(form.credentials_form_filds) }}
-						{% if form_errors(form.credentials_form_filds) %}
+						{{ form_label(form.credentials_form_fields) }}
+						{{ form_widget(form.credentials_form_fields) }}
+						{% if form_errors(form.credentials_form_fields) %}
 							<div class="text-red-600 py-2">
-								{{ form_errors(form.credentials_form_filds) }}
+								{{ form_errors(form.credentials_form_fields) }}
 							</div>
 						{% endif %}
 
 					</div>
-
+					<div>
+						{{ form_label(form.setup) }}
+						{{ form_widget(form.setup) }}
+						<div class="text-red-600 py-2">
+							{{ form_errors(form.setup) }}
+						</div>
+					</div>
 					<div>
 						{{ form_label(form.imageFile) }}
 						{{ form_widget(form.imageFile) }}
@@ -209,6 +215,76 @@
 			</div>
 		</div>
 	</div>
+<script>
+// plugin_form.js
+{# 
+document.addEventListener('DOMContentLoaded', () => {
+    // Function to handle adding new fields to a collection
+    const handleAddField = (collectionHolder, addButtonClass, addButtonText, fieldType) => {
+        let addButton = document.createElement('button');
+        addButton.type = 'button';
+        addButton.classList.add(
+            addButtonClass,
+            'w-full',
+            'px-4',
+            'py-2',
+            'rounded',
+            'bg-blue-600',
+            'text-white',
+            'hover:bg-blue-700',
+            'focus:outline-none',
+            'transition-colors',
+            'my-2'
+        );
+        addButton.innerText = addButtonText;
 
+        let newLinkLi = document.createElement('div');
+        newLinkLi.appendChild(addButton);
+
+        collectionHolder.appendChild(newLinkLi);
+
+        let addFormToCollection = (e) => {
+            let prototype = collectionHolder.dataset.prototype;
+            let index = collectionHolder.dataset.index;
+            let newForm = prototype.replace(/__name__/g, index);
+            collectionHolder.dataset.index = parseInt(index) + 1;
+
+            let newFormLi = document.createElement('div');
+            newFormLi.innerHTML = newForm;
+            newLinkLi.parentNode.insertBefore(newFormLi, newLinkLi);
+        };
+
+        addButton.addEventListener('click', addFormToCollection);
+
+        collectionHolder.dataset.index = collectionHolder.querySelectorAll('input').length;
+    };
+
+    // ScreenShots Collection
+    let screenShotsCollectionHolder = document.querySelector('.screenShots-collection');
+    if (screenShotsCollectionHolder) {
+        handleAddField(screenShotsCollectionHolder, 'add_screenShot_link', 'Add a screen shot', 'screenshot');
+    }
+  // Credentials Form Fields Collection
+  let credentialsCollectionHolder = document.querySelector('.credentials-form-fields-collection');
+  if (credentialsCollectionHolder) {
+      handleAddField(credentialsCollectionHolder, 'add_credentials_form_field_link', 'Add a credential field', 'credential');
+  }
+
+});
+
+
+function handleDescriptionContent() {
+    let moreDescription = document.getElementById('more-plugin-description');
+    let lessDescription = document.getElementById('less-plugin-description');
+
+    if (moreDescription.classList.contains('hidden')) {
+        moreDescription.classList.remove('hidden');
+        lessDescription.classList.add('hidden');
+    } else {
+        moreDescription.classList.add('hidden');
+        lessDescription.classList.remove('hidden');
+    }
+} #}
+</script>
 
 {% endblock %}

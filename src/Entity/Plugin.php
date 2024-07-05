@@ -36,7 +36,7 @@ class Plugin
     private ?string $dashboard_path = null;
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private ?array $credentials_form_filds = null;
+    private ?array $credentials_form_fields = null;
 
     #[ORM\ManyToOne(inversedBy: 'plugins')]
     private ?Category $category = null;
@@ -52,6 +52,9 @@ class Plugin
      */
     #[ORM\OneToMany(targetEntity: PluginScreenShots::class, mappedBy: 'plugin', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $screenShots;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $setup = null;
 
     public function __construct()
     {
@@ -135,14 +138,14 @@ class Plugin
         return $this;
     }
 
-    public function getCredentialsFormFilds(): ?array
+    public function getCredentialsFormFields(): ?array
     {
-        return $this->credentials_form_filds;
+        return $this->credentials_form_fields;
     }
 
-    public function setCredentialsFormFilds(?array $credentials_form_filds): static
+    public function setCredentialsFormFields(?array $credentials_form_fields): static
     {
-        $this->credentials_form_filds = $credentials_form_filds;
+        $this->credentials_form_fields = $credentials_form_fields;
 
         return $this;
     }
@@ -209,6 +212,18 @@ class Plugin
                 $screenShot->setPlugin(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSetup(): ?string
+    {
+        return $this->setup;
+    }
+
+    public function setSetup(?string $setup): static
+    {
+        $this->setup = $setup;
 
         return $this;
     }

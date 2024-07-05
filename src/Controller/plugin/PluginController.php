@@ -11,17 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class PluginController extends AbstractController
 {
     private $entityManager;
     private $pluginRepository;
+    private $router;
 
 
-    public function __construct(EntityManagerInterface $entityManager, PluginRepository $pluginRepository)
+    public function __construct(EntityManagerInterface $entityManager, PluginRepository $pluginRepository , RouterInterface $router)
     {
         $this->entityManager = $entityManager;
         $this->pluginRepository = $pluginRepository;
+        $this->router = $router;
     }
 
     /**
@@ -37,7 +40,24 @@ class PluginController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             try {
+                $routes = $this->router->getRouteCollection();
+                $routeNames = [];
+        
+                foreach ($routes as $routeName => $route) {
+                    $routeNames[] = $routeName;
+                }
+    
+                $routeNames = array_filter($routeNames, function($routeName) {
+                    return !(strpos($routeName, '_edit') !== false || strpos($routeName, '_delete') !== false);
+                });
+    
+               if(!in_array($plugin->getDashboardPath(), $routeNames)){
+                    $this->addFlash('error', 'Route Name is not valid');
+                    return $this->redirectToRoute('app_plugin');
+               }
+
                 $this->entityManager->persist($plugin);
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Plugin Created Successfully');
@@ -62,7 +82,7 @@ class PluginController extends AbstractController
             );
         }
 
-        return $this->render('plugin/index.html.twig', [
+        return $this->render('plugins/plugin_dashboard/index.html.twig', [
             'form'            => $form->createView(),
             'plugins'         => $plugins,
             'num_of_elements' => count($plugins),
@@ -77,10 +97,40 @@ class PluginController extends AbstractController
      */
 
     #[Route('/admin/plugin/show/{id}', name: 'app_plugin_show')]
-    public function show(Plugin $plugin): Response
+    public function show(Plugin $plugin, Request $request): Response
     {
-        return $this->render('plugin/show.html.twig', [
+        $fields = $plugin->getCredentialsFormFields();
+        $credentials = $request->request->all();
+
+        if ($request->isMethod('POST')) {
+            dd($credentials);
+            foreach ($fields as $field) {
+                if (empty($credentials[$field])) {
+                    $this->addFlash('error', 'Please fill in all the required fields');
+                    return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
+                }
+            }
+
+            // Save the submitted data to the database or perform any other actions
+            // try {
+            //     $plugin->setCredentialsFormFilds($credentials);
+          
+            //     $this->entityManager->persist($plugin);
+            //     $this->entityManager->flush();
+
+            //     $this->addFlash('success', 'Plugin Installed successfully.');
+            // } catch (\Exception $e) {
+            //     $this->addFlash('error',   'Failed to update plugin credentials.');
+            // }
+
+            // Redirect to avoid resubmission on page refresh
+            return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
+        }
+
+        // Render the show template with the plugin and form fields
+        return $this->render('plugins/plugin_dashboard/show.html.twig', [
             'plugin' => $plugin,
+            'fields' => $fields,
         ]);
     }
 
@@ -97,17 +147,26 @@ class PluginController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             try {
+
+                foreach ($plugin->getScreenShots() as $screenShot) {
+                    if ($screenShot->getImageName() === null) {
+                        $this->entityManager->remove($screenShot);
+                    }
+                }
                 $this->entityManager->flush();
                 $this->addFlash('success', 'Plugin Updated Successfully');
+
                 return $this->redirectToRoute('app_plugin');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'Plugin Update Failed');
+
                 return $this->redirectToRoute('app_plugin');
             }
         }
 
-        return $this->render('plugin/edit.html.twig', [
+        return $this->render('plugins/plugin_dashboard/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
