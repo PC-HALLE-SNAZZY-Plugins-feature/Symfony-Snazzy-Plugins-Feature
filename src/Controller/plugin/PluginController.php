@@ -12,19 +12,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use App\Service\PluginService;
+use App\Service\TestService;
 
 class PluginController extends AbstractController
 {
     private $entityManager;
     private $pluginRepository;
     private $router;
+    private $pluginService;
 
-
-    public function __construct(EntityManagerInterface $entityManager, PluginRepository $pluginRepository , RouterInterface $router)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        PluginRepository $pluginRepository,
+        RouterInterface $router,
+        PluginService $pluginService
+    ) {
         $this->entityManager = $entityManager;
         $this->pluginRepository = $pluginRepository;
         $this->router = $router;
+        $this->pluginService = $pluginService;
     }
 
     /**
@@ -40,23 +47,23 @@ class PluginController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             try {
                 $routes = $this->router->getRouteCollection();
                 $routeNames = [];
-        
+
                 foreach ($routes as $routeName => $route) {
                     $routeNames[] = $routeName;
                 }
-    
-                $routeNames = array_filter($routeNames, function($routeName) {
+
+                $routeNames = array_filter($routeNames, function ($routeName) {
                     return !(strpos($routeName, '_edit') !== false || strpos($routeName, '_delete') !== false);
                 });
-    
-               if(!in_array($plugin->getDashboardPath(), $routeNames)){
+
+                if (!in_array($plugin->getDashboardPath(), $routeNames)) {
                     $this->addFlash('error', 'Route Name is not valid');
+
                     return $this->redirectToRoute('app_plugin');
-               }
+                }
 
                 $this->entityManager->persist($plugin);
                 $this->entityManager->flush();
@@ -103,27 +110,24 @@ class PluginController extends AbstractController
         $credentials = $request->request->all();
 
         if ($request->isMethod('POST')) {
-            dd($credentials);
             foreach ($fields as $field) {
                 if (empty($credentials[$field])) {
                     $this->addFlash('error', 'Please fill in all the required fields');
+
                     return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
                 }
             }
 
-            // Save the submitted data to the database or perform any other actions
-            // try {
-            //     $plugin->setCredentialsFormFilds($credentials);
-          
-            //     $this->entityManager->persist($plugin);
-            //     $this->entityManager->flush();
 
-            //     $this->addFlash('success', 'Plugin Installed successfully.');
-            // } catch (\Exception $e) {
-            //     $this->addFlash('error',   'Failed to update plugin credentials.');
-            // }
+            try {
+                // $user = $this->getUser();
+                $user = 1;
+                $this->pluginService->saveCredentials($user, $plugin, $credentials);
+                $this->addFlash('success', 'Credentials Saved Successfully');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Credentials Saving Failed');
+            }
 
-            // Redirect to avoid resubmission on page refresh
             return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
         }
 
@@ -147,9 +151,7 @@ class PluginController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
             try {
-
                 foreach ($plugin->getScreenShots() as $screenShot) {
                     if ($screenShot->getImageName() === null) {
                         $this->entityManager->remove($screenShot);

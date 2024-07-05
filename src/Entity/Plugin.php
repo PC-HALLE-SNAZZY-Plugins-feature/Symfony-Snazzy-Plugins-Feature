@@ -56,10 +56,17 @@ class Plugin
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $setup = null;
 
+    /**
+     * @var Collection<int, Credentials>
+     */
+    #[ORM\OneToMany(targetEntity: Credentials::class, mappedBy: 'plugin')]
+    private Collection $credentials;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->screenShots = new ArrayCollection();
+        $this->credentials = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -224,6 +231,36 @@ class Plugin
     public function setSetup(?string $setup): static
     {
         $this->setup = $setup;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Credentials>
+     */
+    public function getCredentials(): Collection
+    {
+        return $this->credentials;
+    }
+
+    public function addCredential(Credentials $credential): static
+    {
+        if (!$this->credentials->contains($credential)) {
+            $this->credentials->add($credential);
+            $credential->setPlugin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCredential(Credentials $credential): static
+    {
+        if ($this->credentials->removeElement($credential)) {
+            // set the owning side to null (unless already changed)
+            if ($credential->getPlugin() === $this) {
+                $credential->setPlugin(null);
+            }
+        }
 
         return $this;
     }

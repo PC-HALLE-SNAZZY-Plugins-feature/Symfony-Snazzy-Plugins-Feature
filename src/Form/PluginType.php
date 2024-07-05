@@ -86,7 +86,7 @@ class PluginType extends AbstractType
                 ],
                 'allow_add'     => true,
                 'allow_delete'  => true,
-                'delete_empty'  => true, 
+                'delete_empty'  => true,
                 'by_reference'  => false,
                 'prototype'     => true,
                 'label'         => 'Credentials Form Fields',

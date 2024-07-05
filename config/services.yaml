@@ -6,11 +6,24 @@
 parameters:
 
 services:
+    App\Service\PluginService:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+        public: true
+
+    App\Service\PluginServiceLocator:
+        class: App\Service\PluginServiceLocator
+        arguments: ['@service_container']
+
+    App\Service\TestService:
+        public: true
+    
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
+    Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
