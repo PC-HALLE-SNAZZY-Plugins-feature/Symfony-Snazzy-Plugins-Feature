@@ -75,25 +75,27 @@ function getDominantColor(img) {
     return [dominantColor, rgbColor];
 }
 
-function setupStickyHeader() {
-    window.addEventListener('scroll', () => {
-        const pluginContainer = document.getElementById('plugin-container');
-        const stickyHeader = document.getElementById('sticky-header');
-        const stickyPoint = pluginContainer.offsetTop + pluginContainer.offsetHeight;
+// function setupStickyHeader() {
+//     window.addEventListener('scroll', () => {
+//         const pluginContainer = document.getElementById('plugin-container');
+//         const stickyHeader = document.getElementById('sticky-header');
+//         const stickyPoint = pluginContainer.offsetTop + pluginContainer.offsetHeight;
 
-        if (window.pageYOffset > stickyPoint) {
-            stickyHeader.style.display = 'flex';
-        } else {
-            stickyHeader.style.display = 'none';
-        }
-    });
-}
+//         if (window.pageYOffset > stickyPoint) {
+//             stickyHeader.style.display = 'flex';
+//         } else {
+//             stickyHeader.style.display = 'none';
+//         }
+//     });
+// }
 
 
 
-let lessButton = document.getElementById('hidde-comments');
-let MoreButton = document.getElementById('see-more-comments');
-document.getElementById('see-more-comments').addEventListener('click', function () {
+
+function moreComments() {
+    const lessButton = document.getElementById('hidde-comments');
+    const MoreButton = document.getElementById('see-more-comments');
+
     document.querySelectorAll('.moreComment').forEach(function (moreComment) {
         if (moreComment.style.display == 'block') {
             moreComment.style.display = 'none';
@@ -107,19 +109,23 @@ document.getElementById('see-more-comments').addEventListener('click', function 
     MoreButton.style.display = 'none';
     lessButton.style.display = 'block';
 
-});
-document.getElementById('hidde-comments').addEventListener('click', function () {
+};
+
+
+function hideComments () {
+    const lessButton = document.getElementById('hidde-comments');
+    const MoreButton = document.getElementById('see-more-comments');
+    
     document.querySelectorAll('.moreComment').forEach(function (moreComment) {
 
         moreComment.style.display = 'none';
+        moreComment.classList.add('fade-out');
 
     });
     lessButton.style.display = 'none';
     MoreButton.style.display = 'block';
-    moreComment.classList.add('fade-out');
 
-});
-
+};
 
 
 

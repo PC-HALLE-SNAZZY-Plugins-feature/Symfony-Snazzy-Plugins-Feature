@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Plugins Catedories
+{% endblock %}
+
+{% block body %}
+	<div class="container my-10">
+		<div class="px-4">
+			{{ form_start(form) }}
+			<div>
+				{{ form_label(form.name) }}
+				{{ form_widget(form.name) }}
+				<div class="text-red-600 py-2">
+					{{ form_errors(form.name) }}
+				</div>
+			</div>
+
+			<div class="w-full flex items-center justify-end">
+				{{ form_widget(form.submit) }}
+			</div>
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+
+{% endblock %}

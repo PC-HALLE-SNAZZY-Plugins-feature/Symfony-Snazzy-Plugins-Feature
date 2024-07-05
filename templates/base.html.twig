@@ -302,7 +302,7 @@
 										</ul>
 										<div class="text-end">
 											<a href="javascript:;" class="text-gray font-semibold text-sm hover:text-primary duration-300">View
-																								                    More</a>
+																																				                    More</a>
 										</div>
 									</div>
 								</div>
@@ -372,8 +372,9 @@
 						</div>
 						<!-- End Topbar -->
 						<!-- Start Content -->
-						<main class="bg-white container font-sans" style="overflow-x: hidden;"> {% block body %}{% endblock %}
-							</main>
+						<main class="bg-white container font-sans p-0 " style="overflow-x: hidden;"> 
+							{% block body %}{% endblock %}
+						</main>
 							<!-- End Content -->
 						</div>
 						<!-- End Content Area -->
@@ -381,5 +382,6 @@
 				</div>
 				<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 				<script src="{{ asset('js/app.js') }}?v=1.0"></script>
+				<script src="{{ asset('js/form.js') }}?v=1.0"></script>
 			</body>
 		</html>
