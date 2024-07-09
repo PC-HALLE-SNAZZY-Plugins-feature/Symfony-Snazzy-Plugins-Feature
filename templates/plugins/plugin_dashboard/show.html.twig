@@ -5,14 +5,44 @@
 
 {% block body %}
 
-
+	{% for flashMessage in app.flashes('success') %}
+		<div id="alert-3" class="flex items-center p-4 mb-4 text-white rounded-lg bg-green-600 dark:bg-gray-800 dark:text-green-400" role="alert">
+			<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+				<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+			</svg>
+			<div class="ms-3 text-sm font-medium">
+				{{ flashMessage }}
+			</div>
+			<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-white rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+				<span class="sr-only">Close</span>
+				<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+				</svg>
+			</button>
+		</div>
+	{% endfor %}
+	{% for flashMessage in app.flashes('error') %}
+		<div id="alert-2" class="flex items-center p-4 mb-4 text-white rounded-lg bg-red-600 dark:bg-gray-800 dark:text-red-400" role="alert">
+			<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+				<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+			</svg>
+			<div class="ms-3 text-sm font-medium">
+				{{ flashMessage }}
+			</div>
+			<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-white rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-2" aria-label="Close">
+				<span class="sr-only">Close</span>
+				<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+				</svg>
+			</button>
+		</div>
+	{% endfor %}
 	<!-- Start Content -->
 
-
 	<div id="plugin-container" class=" flex flex-wrap flex-col md:flex-row items-center justify-start">
-		<div id="cardplugin" class="flex flex-col lg:flex-row lg:m-[1rem] mb-5 lg:space-x-6 p-5 md:p-10 justify-between w-full ">
+		<div id="cardplugin" class="flex flex-col lg:flex-row lg:m-[1rem] mb-5 lg:space-x-6 p-5 md:p-10 justify-between w-full gap-5 lg:gap-0 ">
 			{% if plugin.imageName %}
-				<div class="w-40 flex-shrink-0">
+				<div class="w-40 flex-shrink-0 flex flex-col items-center justify-center">
 					<img src="{{ vich_uploader_asset(plugin, 'imageFile') }}" alt="Icon" id="Icon" class="Icon w-40 h-40 object-cover">
 					<h1 class="text-xl font-md pt-1">{{ plugin.name }}</h1>
 				</div>
@@ -50,43 +80,12 @@
 		</div>
 
 	</div>
-			{% for flashMessage in app.flashes('success') %}
-			<div id="alert-3" class="flex items-center p-4 mb-4 text-white rounded-lg bg-green-600 dark:bg-gray-800 dark:text-green-400" role="alert">
-				<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-					<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-				</svg>
-				<div class="ms-3 text-sm font-medium">
-					{{ flashMessage }}
-				</div>
-				<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-white rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
-					<span class="sr-only">Close</span>
-					<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
-						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-					</svg>
-				</button>
-			</div>
-		{% endfor %}
-		{% for flashMessage in app.flashes('error') %}
-			<div id="alert-2" class="flex items-center p-4 mb-4 text-white rounded-lg bg-red-600 dark:bg-gray-800 dark:text-red-400" role="alert">
-				<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-					<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-				</svg>
-				<div class="ms-3 text-sm font-medium">
-					{{ flashMessage }}
-				</div>
-				<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-white rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-2" aria-label="Close">
-					<span class="sr-only">Close</span>
-					<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
-						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-					</svg>
-				</button>
-			</div>
-		{% endfor %}
+
 
 	<!--Slides section-->
 
 	{% if plugin.screenShots|length > 0 %}
-		<div id="Screenshotscarousse" class="   flex flex-col items-center">
+		<div id="Screenshotscarousse" class="   flex flex-col items-center mt-5">
 
 			<div class="carousel lg:mb-2   ">
 				{% for screenshot in plugin.screenShots %}
@@ -119,10 +118,9 @@
 				</div>
 			</div>
 			<div class="p-2 border rounded-lg ">
-				<p class="text-sm text-gray-600">
-
+				<div class="text-sm text-gray-600">
 					<span id="more-plugin-description">
-						{{ plugin.description|slice(0, 500) }}
+						<p>{{ plugin.description|slice(0, 500) }}</p>
 						{% if plugin.description|length > 500 %}
 							<button onclick="handleDescriptionContent()" class="text-xs text-gray-300">
 								see more...
@@ -131,7 +129,7 @@
 
 					</span>
 					<span class="hidden" id="less-plugin-description">
-						{{ plugin.description }}
+						<p>{{ plugin.description }}</p>
 						{% if plugin.description|length > 500 %}
 							<br>
 							<button onclick="handleDescriptionContent()" class="ext-xs text-gray-300">
@@ -139,7 +137,7 @@
 							</button>
 						{% endif %}
 					</span>
-				</p>
+				</div>
 			</div>
 		</div>
 		<!-- Rating Section -->
@@ -218,8 +216,8 @@
 							</div>
 							<span class="ml-2 text-yellow-500">★★★★★</span>
 							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																                                variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																                                form, by injected humour																																																																	                      There are many variations of passages of Lorem Ipsum available,</p>
+																																																																																																																																																																																								                                variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																																																																																								                                form, by injected humour																																																																	                      There are many variations of passages of Lorem Ipsum available,</p>
 							<div class="flex items-center mt-2"></div>
 						</div>
 					</div>
@@ -237,9 +235,9 @@
 							</div>
 							<span class="ml-2 text-yellow-500">★★★☆☆</span>
 							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																								                      form, by injected humour
-																																																																																																																																																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																																																																																																																																																																                      form, by injected humour
+																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
 							<div class="flex items-center mt-2"></div>
 						</div>
 					</div>
@@ -252,9 +250,9 @@
 							</div>
 							<span class="ml-2 text-yellow-500">★★★★☆</span>
 							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																								                      form, by injected humour
-																																																																																																																																																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																																																																																																																																																																                      form, by injected humour
+																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
 							<div class="flex items-center mt-2"></div>
 						</div>
 					</div>
@@ -267,9 +265,9 @@
 							</div>
 							<span class="ml-2 text-yellow-500">★★★★☆</span>
 							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																								                      form, by injected humour
-																																																																																																																																																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																																																																																																																																																																                      form, by injected humour
+																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
 							<div class="flex items-center mt-2"></div>
 						</div>
 					</div>
@@ -282,9 +280,9 @@
 							</div>
 							<span class="ml-2 text-yellow-500">★★★★☆</span>
 							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																								                      form, by injected humour
-																																																																																																																																																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																																																																																																																																																																                      form, by injected humour
+																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
 							<div class="flex items-center mt-2"></div>
 						</div>
 					</div>
@@ -297,9 +295,9 @@
 							</div>
 							<span class="ml-2 text-yellow-500">★★★★☆</span>
 							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																								                      form, by injected humour
-																																																																																																																																																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																																																																																																																																																																                      form, by injected humour
+																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
 							<div class="flex items-center mt-2"></div>
 						</div>
 
@@ -313,9 +311,9 @@
 							</div>
 							<span class="ml-2 text-yellow-500">★★★★☆</span>
 							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																								                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																								                      form, by injected humour
-																																																																																																																																																																																																																																																								                      There are many variations of passages of Lorem Ipsum available,</p>
+																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
+																																																																																																																																																																																																																																																																                      form, by injected humour
+																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
 							<div class="flex items-center mt-2"></div>
 						</div>
 					</div>
@@ -325,13 +323,13 @@
 				<button onclick="hideComments()" id="hidde-comments" class="text-blue-500 hidden p-2 pl-4">See less</button>
 
 
-				<div class="flex justify-between items-center py-2 px-4 w-full">
+				<div class="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-between items-start md:items-center py-2 px-4 w-full">
 
 					<div class="flex items-center gap-3">
 						<p class="text-gray-900 text-md">Rate this plugin</p>
 						<small class="text-gray-400 text-xs">Tell us what you think.</small>
 					</div>
-					<article class="flex items-center gap-10">
+					<article class="flex items-center  justify-between md:justify-end md:gap-10 w-full md:w-auto">
 						<div class="star-button-rating">
 
 							<button type="button" data-modal-target="default-modal" data-modal-toggle="default-modal">★</button>
@@ -398,7 +396,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																			                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -424,7 +422,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																			                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -450,7 +448,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																			                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -476,7 +474,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																			                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -502,7 +500,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																			                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -528,7 +526,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																			                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -554,7 +552,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																			                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -579,7 +577,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																			                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -632,12 +630,14 @@
 						<input type="text" id="field" name="{{ field }}" class="form-control relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm" placeholder="Enter The Category Name" required>
 					{% endfor %}
 
-					<div class="flex w-full my-1 justify-end">
+					<div class="flex w-full my-1 justify-start">
 						<a href="{{ path('app_plugin_show', { 'id': plugin.id }) }}#setup" data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="text-blue-500 text-sm">How to get my credentials ?</a>
 					</div>
-					<button type="submit" class=" mt-2 w-full md:w-1/2 xl:w-1/4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none transition-colors mb-3">
-						Save
-					</button>
+					<div class="w-full flex justify-end">
+						<button type="submit" class=" mt-2 w-full md:w-1/2 xl:w-1/4 px-4 py-2 rounded bg-black text-white  focus:outline-none transition-colors mb-3">
+							install
+						</button>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -667,7 +667,7 @@
 			<div class="p-4 pt-0 space-y-4">
 				<p class="text-sm text-base leading-relaxed text-gray-500 dark:text-gray-400">
 					Reviews are public and include your account and device info
-																				Everyone can see your Google Account name and photo associated with your review. Past edits are visible to users unless you delete your review.
+					Everyone can see your Snazzy Account name and photo associated with your review. Past edits are visible to users unless you delete your review.
 				</p>
 				<form action="" method="post">
 					<article class="flex flex-col items-center gap-2 w-full">
@@ -684,7 +684,7 @@
 							<label for="star1" title="1 star">★</label>
 						</div>
 						<div class="flex items-center gap-2  w-full">
-							<input type="search" name="review" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tell us what you think..." />
+							<input type="search" name="review" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tell us what you think..."/>
 							<button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3.5  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-1/4">Send</button>
 						</div>
 					</article>

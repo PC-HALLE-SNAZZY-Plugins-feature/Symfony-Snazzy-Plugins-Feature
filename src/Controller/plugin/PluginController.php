@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use App\Service\PluginService;
+use App\Service\Plugin\PluginService;
 use App\Service\TestService;
 
 class PluginController extends AbstractController
@@ -56,7 +56,7 @@ class PluginController extends AbstractController
                 }
 
                 $routeNames = array_filter($routeNames, function ($routeName) {
-                    return !(strpos($routeName, '_edit') !== false || strpos($routeName, '_delete') !== false);
+                    return !(strpos($routeName, '_edit') !== false || strpos($routeName, '_delete') !== false || strpos($routeName, '_show') !== false);
                 });
 
                 if (!in_array($plugin->getDashboardPath(), $routeNames)) {

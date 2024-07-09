@@ -6,19 +6,14 @@
 parameters:
 
 services:
-    App\Service\PluginService:
+    App\Service\Plugin\PluginService:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
         public: true
-
-    App\Service\PluginServiceLocator:
-        class: App\Service\PluginServiceLocator
-        arguments: ['@service_container']
+        
 
     App\Service\TestService:
         public: true
-    
-
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

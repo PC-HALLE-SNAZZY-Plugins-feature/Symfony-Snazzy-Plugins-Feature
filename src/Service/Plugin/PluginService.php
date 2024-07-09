@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Plugin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Credentials;
-use App\Service\PluginServiceLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PluginService
 {
     private $entityManager;
-    private $serviceLocator;
+    private $container;
 
-    public function __construct(EntityManagerInterface $entityManager, PluginServiceLocator $serviceLocator)
+    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container)
     {
         $this->entityManager = $entityManager;
-        $this->serviceLocator = $serviceLocator;
+        $this->container = $container;
     }
 
     public function saveCredentials($user, object $plugin, array $credentials_data)
     {
         $credentials = new Credentials();
-
+        
         // ! you should send user as object not id from the controller
         $user = $this->entityManager->getRepository(User::class)->find($user);
         // ! -------------------------------------------------------------------
@@ -41,9 +42,10 @@ class PluginService
 
             $credentials->setCredentials($credentials_object);
 
-            if (!$this->verifyCredentials($plugin, $credentials_object)) {
-                return false;
-            }
+            // ! you should call the verifyCredentials function from the plugin service
+            // if (!$this->verifyCredentials($plugin, $credentials_object)) {
+            //     return false;
+            // }
 
             $this->entityManager->persist($credentials);
             $this->entityManager->flush();
@@ -55,19 +57,18 @@ class PluginService
     public function verifyCredentials($plugin, $credentials_object)
     {
 
-        $serviceName = ucfirst(strtolower($plugin->getName())) . 'Service';
-        
-        $service = $this->serviceLocator->getService($serviceName);
-        dd($service);
+        $serviceName = ucfirst(strtolower(str_replace(' ', '', $plugin->getName()))) . 'Service';
+        $serviceName = str_replace(['"', "'"], '', $serviceName);
+        dd($serviceName);
+        $ServiceInstance = $this->container->get($serviceName::class);
+        dd($ServiceInstance);
     
-        $methodName = 'verifyCredentials';
-    
-        if (!method_exists($service, $methodName)) {
+        if (!method_exists($ServiceInstance, 'verifyCredentials')) {
             return false;
         }
     
         try {
-            return $service->$methodName($credentials_object);
+            return $ServiceInstance->verifyCredentials($credentials_object);
         } catch (\Exception $e) {
             return false;
         }
