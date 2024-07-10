@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use App\Service\Plugin\PluginService;
-use App\Service\TestService;
+use App\Repository\RatingRepository;
 
 class PluginController extends AbstractController
 {
@@ -21,17 +21,20 @@ class PluginController extends AbstractController
     private $pluginRepository;
     private $router;
     private $pluginService;
+    private $ratingRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         PluginRepository $pluginRepository,
         RouterInterface $router,
-        PluginService $pluginService
+        PluginService $pluginService,
+        RatingRepository $ratingRepository
     ) {
         $this->entityManager = $entityManager;
         $this->pluginRepository = $pluginRepository;
         $this->router = $router;
         $this->pluginService = $pluginService;
+        $this->ratingRepository = $ratingRepository;
     }
 
     /**
@@ -118,24 +121,68 @@ class PluginController extends AbstractController
                 }
             }
 
-
             try {
-                // $user = $this->getUser();
+
                 $user = 1;
+
+                /**
+                 * ! you should send user as object not id from the controller
+                 * ! i send it as id because i don't have the  authenticated user
+                 * ? $user = $this->getUser();
+                 */
+                
                 $this->pluginService->saveCredentials($user, $plugin, $credentials);
-                $this->addFlash('success', 'Credentials Saved Successfully');
+                $this->addFlash('success', 'Plugin Installed Successfully');
+
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Credentials Saving Failed');
+                $this->addFlash('error', 'Plugin Installation Failed');
             }
 
             return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
         }
 
-        // Render the show template with the plugin and form fields
+        $ratings = $this->ratingRepository->findRatingsWithUser();
+
+        // ? Filter out ratings with empty comments
+        $ratings = array_filter($ratings, function ($rating) {
+            return !empty($rating['comment']);
+        });
+
+
         return $this->render('plugins/plugin_dashboard/show.html.twig', [
-            'plugin' => $plugin,
-            'fields' => $fields,
+            'plugin'      => $plugin,
+            'fields'      => $fields,
+            'RatingStats' => $this->pluginService->gatRatingStats($plugin),
+            'last_rating' => array_slice($ratings, 0, 3),
+            'rest_rating' => array_slice($ratings, 3),
         ]);
+    }
+
+    /**
+     * ? in this Function we can rate the plugin
+     * ? @Route("/admin/plugin/rate/{id}", name="app_plugin_rate").
+     */
+
+    #[Route('/admin/plugin/rate/{id}', name: 'app_plugin_rate')]
+    public function rate(Plugin $plugin, Request $request): Response
+    {
+        $rating = $request->request->get('rating');
+        $review = $request->request->get('review');
+
+
+
+        if ($rating) {
+            try {
+                // $user = $this->getUser();
+                $user = 1;
+                $this->pluginService->ratePlugin($user, $plugin, $rating, $review);
+                $this->addFlash('success', 'Plugin Rated Successfully');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Plugin Rating Failed');
+            }
+        }
+
+        return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
     }
 
 
@@ -153,7 +200,7 @@ class PluginController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 foreach ($plugin->getScreenShots() as $screenShot) {
-                    if ($screenShot->getImageName() === null) {
+                    if (empty($screenShot->getImageName())) {
                         $this->entityManager->remove($screenShot);
                     }
                 }

@@ -39,9 +39,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Credentials::class, mappedBy: 'user')]
     private Collection $credentials;
 
+    /**
+     * @var Collection<int, Rating>
+     */
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'user')]
+    private Collection $plugin;
+
+    /**
+     * @var Collection<int, Rating>
+     */
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'user')]
+    private Collection $ratings;
+
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
     public function __construct()
     {
         $this->credentials = new ArrayCollection();
+        $this->plugin = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,6 +162,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $credential->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rating>
+     */
+    public function getPlugin(): Collection
+    {
+        return $this->plugin;
+    }
+
+    public function addPlugin(Rating $plugin): static
+    {
+        if (!$this->plugin->contains($plugin)) {
+            $this->plugin->add($plugin);
+            $plugin->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlugin(Rating $plugin): static
+    {
+        if ($this->plugin->removeElement($plugin)) {
+            // set the owning side to null (unless already changed)
+            if ($plugin->getUser() === $this) {
+                $plugin->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rating>
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): static
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings->add($rating);
+            $rating->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): static
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getUser() === $this) {
+                $rating->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
 
         return $this;
     }

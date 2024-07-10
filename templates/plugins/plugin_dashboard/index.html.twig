@@ -80,13 +80,13 @@
 							<tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
 								<th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 									{% if plugin.imageName %}
-										<div class=" bg-white/5 backdrop-blur-xl w-10 h-10 rounded-lg max-h-full border border-gray-300  overflow-hidden flex items-center bg-center bg-cover bg-no-repeat" style="background-image:url('{{ vich_uploader_asset(plugin, 'imageFile') }}')"></div>
+										<div class=" bg-white/5 backdrop-blur-xl w-10 h-10 rounded-lg max-h-full  overflow-hidden flex items-center bg-center bg-cover bg-no-repeat" style="background-image:url('{{ vich_uploader_asset(plugin, 'imageFile') }}')"></div>
 									{% endif %}
 								</th>
 								<th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
 									{{ plugin.name }}
 								</th>
-								<th scope="row" class="px-6 py-2 text-xs font-medium text-gray-600 dark:text-white w-full break-words whitespace-normal">
+								<th scope="row" class="px-6 py-2 text-xs font-medium text-gray-600 dark:text-white min-w-[500px] md:w-full  break-words whitespace-normal">
 									{{ plugin.description|slice(0, 200) }}
 									{% if plugin.description|length > 200 %}
 										...

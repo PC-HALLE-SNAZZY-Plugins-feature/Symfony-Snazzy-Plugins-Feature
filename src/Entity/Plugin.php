@@ -62,11 +62,18 @@ class Plugin
     #[ORM\OneToMany(targetEntity: Credentials::class, mappedBy: 'plugin')]
     private Collection $credentials;
 
+    /**
+     * @var Collection<int, Rating>
+     */
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'plugin')]
+    private Collection $ratings;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->screenShots = new ArrayCollection();
         $this->credentials = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -259,6 +266,36 @@ class Plugin
             // set the owning side to null (unless already changed)
             if ($credential->getPlugin() === $this) {
                 $credential->setPlugin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rating>
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): static
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings->add($rating);
+            $rating->setPlugin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): static
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getPlugin() === $this) {
+                $rating->setPlugin(null);
             }
         }
 

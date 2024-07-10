@@ -50,7 +50,7 @@
 			<div
 				class="flex-1  flex  flex-col lg:px-3 lg:pb-10 lg:pt-5 justify-between">
 				<!-- Flex item takes remaining space -->
-				<p class="text-black  text-xs md:text-base md:w-70 break-words whitespace-normal">
+				<p class="text-gray-500  text-xs md:text-base md:w-70 break-words whitespace-normal">
 					{{ plugin.description|slice(0, 300) }}
 					{% if plugin.description|length > 300 %}
 						<a href="{{ path('app_plugin_show', { 'id': plugin.id }) }}#description">...</a>
@@ -58,13 +58,13 @@
 
 				</p>
 				<div class="flex justify-between items-center mt-5">
-					<div class="flex items-center">
-						<h1 class="text-gray-400 text-lg mx-3">
-							<i class="fa-solid fa-download"></i>
-							25 k
-						</h1>
+					<div class="flex items-center gap-2">
+						<div class="flex h-full justify-start items-end gap-1">
+							<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+							<span class=" text-gray-400 text-xs p-0">54k</span>
+						</div>
 						<h1 class="mb-2 text-2xl text-gray-700">
-							4.5
+							{{ RatingStats.average_rating }}
 							<span class="text-yellow-500">★</span>
 						</h1>
 					</div>
@@ -151,10 +151,11 @@
 			<div class=" border rounded-lg">
 				<div class="p-2 ml-10  flex flex-col md:flex-row items-stretch   ">
 					<div class="mt-6 md:mt-0 md:w-1/3 flex flex-col justify-center">
-						<h1 class="mb-2 text-6xl">4.5
+						<h1 class="mb-2 text-6xl">{{ RatingStats.average_rating }}
 							<span class="text-yellow-500">★</span>
 						</h1>
-						<p class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">1,745 Total ratings</p>
+						<p class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">{{ RatingStats.ratings_count }}
+							Total ratings</p>
 					</div>
 
 					<div class="mt-4 md:mt-0 md:ml-6 md:w-4/5 flex flex-col justify-center">
@@ -163,160 +164,121 @@
 								<span class="text-yellow-500">★</span>
 							</a>
 							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
-								<div class="h-3 bg-yellow-300 rounded-md" style="width: 70%"></div>
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: {{ RatingStats.five_star.percentage }}%;"></div>
+
 							</div>
-							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">70%</span>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">{{ RatingStats.five_star.percentage | round(0) }}%</span>
 						</div>
 						<div class="flex items-center mt-2">
 							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">4
 								<span class="text-yellow-500">★</span>
 							</a>
 							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
-								<div class="h-3 bg-yellow-300 rounded-md" style="width: 50%"></div>
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: {{ RatingStats.four_star.percentage }}%;"></div>
 							</div>
-							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">50%</span>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">{{ RatingStats.four_star.percentage | round(0) }}%</span>
 						</div>
 						<div class="flex items-center mt-2">
 							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">3
 								<span class="text-yellow-500">★</span>
 							</a>
 							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
-								<div class="h-3 bg-yellow-300 rounded-md" style="width: 8%"></div>
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: {{ RatingStats.three_star.percentage }}%;"></div>
 							</div>
-							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">8%</span>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">{{ RatingStats.three_star.percentage | round(0) }}%</span>
 						</div>
 						<div class="flex items-center mt-2">
 							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">2
 								<span class="text-yellow-500">★</span>
 							</a>
 							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
-								<div class="h-3 bg-yellow-300 rounded-md" style="width: 4%"></div>
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: {{ RatingStats.two_star.percentage }}%;"></div>
 							</div>
-							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">4%</span>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">{{ RatingStats.two_star.percentage | round(0) }}%</span>
 						</div>
 						<div class="flex items-center mt-2">
 							<a href="#" class="text-sm font-medium text-gray-600 dark:text-gray-500 hover:underline">1
 								<span class="text-yellow-500">★</span>
 							</a>
 							<div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-md dark:bg-gray-700">
-								<div class="h-3 bg-yellow-300 rounded-md" style="width: 1%"></div>
+								<div class="h-3 bg-yellow-300 rounded-md" style="width: {{ RatingStats.one_star.percentage }}%;"></div>
 							</div>
-							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">1%</span>
+							<span class="text-sm font-medium text-gray-500 ml-6 dark:text-gray-400">{{ RatingStats.one_star.percentage | round(0) }}%</span>
 						</div>
 					</div>
 				</div>
 
 				<div class="p-2  ">
-					<div class=" ml-2 mr-3 flex items-start mb-1">
-						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/6.jpg" alt="avatar">
-						<div>
-							<div class="flex items-end ">
-								<h2 class="text-lg font-semibold text-black dark:text-white ">Jean</h2>
-								<span class="text-xs ml-2 text-gray-500 dark:text-gray-400 py-1">40 minutes ago</span>
+
+					{% for rate in last_rating %}
+
+						{% if rate.comment %}
+
+
+							<div class=" ml-2 mr-3 flex items-start mb-1">
+								<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/6.jpg" alt="avatar">
+								<div>
+									<div class="flex items-end ">
+										<h2 class="text-lg font-semibold text-black dark:text-white ">{{ rate.username }}</h2>
+										<span class="text-xs ml-2 text-gray-500 dark:text-gray-400 py-1">{{ rate.createdAt|date('F j, Y') }}</span>
+									</div>
+									<span class="ml-2 text-yellow-500">
+										{% set ratingValue = rate.rating %}
+
+										{% for i in 1..ratingValue %}
+											★
+										{% endfor %}
+										{% if ratingValue < 5 %}
+											{% for i in 1..(5-ratingValue) %}
+												☆
+											{% endfor %}
+										{% endif %}
+
+									</span>
+									<p class="text-sm text-gray-600  dark:text-gray-400">
+										{{ rate.comment }}
+									</p>
+									<div class="flex items-center mt-2"></div>
+								</div>
 							</div>
-							<span class="ml-2 text-yellow-500">★★★★★</span>
-							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																								                                variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																								                                form, by injected humour																																																																	                      There are many variations of passages of Lorem Ipsum available,</p>
-							<div class="flex items-center mt-2"></div>
-						</div>
-					</div>
+						{% endif %}
+					{% endfor %}
 					<div class="p-2">
 						<button id="see-more-comments" onclick="moreComments()" class="text-blue-500 text-xs">See more</button>
 					</div>
 				</div>
 				<div class="moreComment hidden">
-					<div class=" ml-3 mr-3 flex items-start mb-4">
-						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/8.jpg" alt="avatar">
-						<div>
-							<div class="flex items-center mb-2">
-								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
-								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">6 minutes ago</span>
-							</div>
-							<span class="ml-2 text-yellow-500">★★★☆☆</span>
-							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																																                      form, by injected humour
-																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
-							<div class="flex items-center mt-2"></div>
-						</div>
-					</div>
-					<div class=" ml-3 mr-3 flex items-start mb-4">
-						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/1.jpg" alt="avatar">
-						<div>
-							<div class="flex items-center mb-2">
-								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
-								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">10 seconds ago</span>
-							</div>
-							<span class="ml-2 text-yellow-500">★★★★☆</span>
-							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																																                      form, by injected humour
-																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
-							<div class="flex items-center mt-2"></div>
-						</div>
-					</div>
-					<div class=" ml-3 mr-3 flex items-start mb-4">
-						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/3.jpg" alt="avatar">
-						<div>
-							<div class="flex items-center mb-2">
-								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
-								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">1 hours ago</span>
-							</div>
-							<span class="ml-2 text-yellow-500">★★★★☆</span>
-							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																																                      form, by injected humour
-																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
-							<div class="flex items-center mt-2"></div>
-						</div>
-					</div>
-					<div class=" ml-3 mr-3 flex items-start mb-4">
-						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/8.jpg" alt="avatar">
-						<div>
-							<div class="flex items-center mb-2">
-								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
-								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">30 minutes ago</span>
-							</div>
-							<span class="ml-2 text-yellow-500">★★★★☆</span>
-							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																																                      form, by injected humour
-																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
-							<div class="flex items-center mt-2"></div>
-						</div>
-					</div>
-					<div class=" ml-3 mr-3 flex items-start mb-4">
-						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/4.jpg" alt="avatar">
-						<div>
-							<div class="flex items-center mb-2">
-								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
-								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">12 minutes ago</span>
-							</div>
-							<span class="ml-2 text-yellow-500">★★★★☆</span>
-							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																																                      form, by injected humour
-																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
-							<div class="flex items-center mt-2"></div>
-						</div>
+					{% for rate in rest_rating %}
 
-					</div>
-					<div class=" ml-3 mr-3 flex items-start mb-4">
-						<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/7.jpg" alt="avatar">
-						<div>
-							<div class="flex items-center mb-2">
-								<h2 class="text-lg font-semibold text-black dark:text-white -mt-1">Jean</h2>
-								<span class="text-sm ml-2 text-gray-500 dark:text-gray-400">34 minutes ago</span>
+						{% if rate.comment %}
+							<div class=" ml-2 mr-3 flex items-start mb-1">
+								<img class="w-10 h-10 rounded-full object-cover mr-4 shadow" src="https://randomuser.me/api/portraits/men/6.jpg" alt="avatar">
+								<div>
+									<div class="flex items-end ">
+										<h2 class="text-lg font-semibold text-black dark:text-white ">{{ rate.username }}</h2>
+										<span class="text-xs ml-2 text-gray-500 dark:text-gray-400 py-1">{{ rate.createdAt|date('F j, Y') }}</span>
+									</div>
+									<span class="ml-2 text-yellow-500">
+										{% set ratingValue = rate.rating %}
+
+										{% for i in 1..ratingValue %}
+											★
+										{% endfor %}
+										{% if ratingValue < 5 %}
+											{% for i in 1..(5-ratingValue) %}
+												☆
+											{% endfor %}
+										{% endif %}
+
+									</span>
+									<p class="text-sm text-gray-600  dark:text-gray-400">
+										{{ rate.comment }}
+									</p>
+									<div class="flex items-center mt-2"></div>
+								</div>
 							</div>
-							<span class="ml-2 text-yellow-500">★★★★☆</span>
-							<p class="text-sm text-gray-600  dark:text-gray-400">Great product, highly recommend! There are many
-																																																																																																																																																																																																																																																																                      variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some
-																																																																																																																																																																																																																																																																                      form, by injected humour
-																																																																																																																																																																																																																																																																                      There are many variations of passages of Lorem Ipsum available,</p>
-							<div class="flex items-center mt-2"></div>
-						</div>
-					</div>
+						{% endif %}
+					{% endfor %}
 				</div>
 
 
@@ -386,7 +348,7 @@
 				</div>
 			</div>
 
-			<div class="SimilarPluginssliders" style="width:100%;  overflow-x: scroll;">
+			{# <div class="SimilarPluginssliders" style="width:100%;  overflow-x: scroll;">
 				<div class="flex transition-transform duration-500 ease-in-out" id="carousel">
 					<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-4 my-6">
 						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
@@ -396,7 +358,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -404,7 +366,7 @@
 									<div class="flex justify-between">
 										<div class="flex items-end gap-1">
 											<div class="flex h-full justify-start items-end gap-1">
-												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
 												<span class=" text-gray-400 text-xs p-0">54k</span>
 											</div>
 										</div>
@@ -422,7 +384,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -430,7 +392,7 @@
 									<div class="flex justify-between">
 										<div class="flex items-end gap-1">
 											<div class="flex h-full justify-start items-end gap-1">
-												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
 												<span class=" text-gray-400 text-xs p-0">54k</span>
 											</div>
 										</div>
@@ -448,7 +410,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -456,7 +418,7 @@
 									<div class="flex justify-between">
 										<div class="flex items-end gap-1">
 											<div class="flex h-full justify-start items-end gap-1">
-												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
 												<span class=" text-gray-400 text-xs p-0">54k</span>
 											</div>
 										</div>
@@ -474,7 +436,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -482,7 +444,7 @@
 									<div class="flex justify-between">
 										<div class="flex items-end gap-1">
 											<div class="flex h-full justify-start items-end gap-1">
-												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
 												<span class=" text-gray-400 text-xs p-0">54k</span>
 											</div>
 										</div>
@@ -500,7 +462,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -508,7 +470,7 @@
 									<div class="flex justify-between">
 										<div class="flex items-end gap-1">
 											<div class="flex h-full justify-start items-end gap-1">
-												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
 												<span class=" text-gray-400 text-xs p-0">54k</span>
 											</div>
 										</div>
@@ -526,7 +488,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -534,7 +496,7 @@
 									<div class="flex justify-between">
 										<div class="flex items-end gap-1">
 											<div class="flex h-full justify-start items-end gap-1">
-												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
 												<span class=" text-gray-400 text-xs p-0">54k</span>
 											</div>
 										</div>
@@ -552,7 +514,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -560,7 +522,7 @@
 									<div class="flex justify-between">
 										<div class="flex items-end gap-1">
 											<div class="flex h-full justify-start items-end gap-1">
-												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
 												<span class=" text-gray-400 text-xs p-0">54k</span>
 											</div>
 										</div>
@@ -577,7 +539,7 @@
 								<div class="flex flex-col justify-between  pb-3 bg-white ">
 									<div>
 										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																														                            Schemas</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
 										<p class="block  text-xs leading-tight  text-gray-400 ">
 											What Zombies Can Teach You About Food</p>
 
@@ -585,7 +547,7 @@
 									<div class="flex justify-between">
 										<div class="flex items-end gap-1">
 											<div class="flex h-full justify-start items-end gap-1">
-												<img src="assets\svg\download.svg" class="py-1" alt="">
+												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
 												<span class=" text-gray-400 text-xs p-0">54k</span>
 											</div>
 										</div>
@@ -597,7 +559,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> #}
 		</div>
 
 
@@ -627,7 +589,7 @@
 
 					{% for field in fields %}
 						<label for="field" class="block text-sm font-medium text-gray-900 my-1">{{ field }}</label>
-						<input type="text" id="field" name="{{ field }}" class="form-control relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm" placeholder="Enter The Category Name" required>
+						<input type="text" id="field" name="{{ field }}" class="form-control relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm mb-2" placeholder="Enter The Category Name" required>
 					{% endfor %}
 
 					<div class="flex w-full my-1 justify-start">
@@ -667,24 +629,24 @@
 			<div class="p-4 pt-0 space-y-4">
 				<p class="text-sm text-base leading-relaxed text-gray-500 dark:text-gray-400">
 					Reviews are public and include your account and device info
-					Everyone can see your Snazzy Account name and photo associated with your review. Past edits are visible to users unless you delete your review.
+																																																							Everyone can see your Snazzy Account name and photo associated with your review. Past edits are visible to users unless you delete your review.
 				</p>
-				<form action="" method="post">
+				<form action="{{ path('app_plugin_rate' , { id:plugin.id }) }}" method="post">
 					<article class="flex flex-col items-center gap-2 w-full">
 						<div class="star-rating mb-3">
-							<input type="radio" id="star5" name="rating" value="5">
+							<input type="radio" id="star5" name="rating" value="5" min="1" max="5" required>
 							<label for="star5" title="5 stars">★</label>
-							<input type="radio" id="star4" name="rating" value="4">
+							<input type="radio" id="star4" name="rating" value="4" min="1" max="5" required>
 							<label for="star4" title="4 stars">★</label>
-							<input type="radio" id="star3" name="rating" value="3">
+							<input type="radio" id="star3" name="rating" value="3" min="1" max="5" required>
 							<label for="star3" title="3 stars">★</label>
-							<input type="radio" id="star2" name="rating" value="2">
+							<input type="radio" id="star2" name="rating" value="2" min="1" max="5" required>
 							<label for="star2" title="2 stars">★</label>
-							<input type="radio" id="star1" name="rating" value="1">
+							<input type="radio" id="star1" name="rating" value="1" min="1" max="5" required>
 							<label for="star1" title="1 star">★</label>
 						</div>
 						<div class="flex items-center gap-2  w-full">
-							<input type="search" name="review" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tell us what you think..."/>
+							<input type="search" name="review" class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Describe your experience (optional)"/>
 							<button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3.5  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-1/4">Send</button>
 						</div>
 					</article>
