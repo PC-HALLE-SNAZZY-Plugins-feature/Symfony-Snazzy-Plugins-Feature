@@ -57,6 +57,9 @@ class PluginService
             if (!$this->verifyCredentials($plugin, $credentials_object)) 
                 throw new \Exception('Credentials Verification Failed');
             
+            // ? install the plugin to the user
+            $plugin->addUser($user);
+
 
             $this->entityManager->persist($credentials);
             $this->entityManager->flush();
@@ -216,6 +219,14 @@ class PluginService
         ];
     }
 
+    /**
+     * ? this function will verify the credentials of the plugin
+     * 
+     * @param object $plugin
+     * @param object $credentials_object
+     * @return bool
+     * 
+     */
 
     public function verifyCredentials($plugin, $credentials_object)
     {
@@ -248,4 +259,33 @@ class PluginService
 
         return $ServiceInstance->verifyCredentials($credentials_object);
     }
+
+
+    /**
+     * ? this function will uninstall the plugin from the user
+     * ! you should use the first parameter as object not id when you call this function from the controller
+     * ? public function uninstallPlugin(object $user, object $plugin)
+     * 
+     * @param object $plugin
+     * @param object $user
+     * @return void
+     * 
+     */
+
+    public function uninstallPlugin($user, object $plugin)
+    {
+        // ! you should send user as object not id from the controller
+        // ! you should delete this line when you implement the feature in SNAZZY CODE
+        $user = $this->entityManager->getRepository(User::class)->find($user);
+        // ! -------------------------------------------------------------------
+
+        try {
+            $plugin->removeUser($user);
+            $this->entityManager->flush();
+        } catch (\Exception $e) {
+            throw new \Exception('Uninstall Plugin Failed');
+        }
+    }
+
+
 }

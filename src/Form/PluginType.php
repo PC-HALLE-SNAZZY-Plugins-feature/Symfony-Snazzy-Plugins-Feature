@@ -23,10 +23,10 @@ class PluginType extends AbstractType
             ->add('name', TextType::class, [
                 'attr' => [
                     'class'       => 'form-control relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm',
-                    'placeholder' => 'Enter The Category Name',
+                    'placeholder' => 'Enter The Plugin Name',
                 ],
                 'constraints' => [
-                    new NotBlank(['message' => 'Category Name cannot be blank']),
+                    new NotBlank(['message' => 'Plugin Name cannot be blank']),
                 ],
                 'label'      => 'Name',
                 'label_attr' => ['class' => 'block text-lg font-medium text-gray-900 mb-2'],

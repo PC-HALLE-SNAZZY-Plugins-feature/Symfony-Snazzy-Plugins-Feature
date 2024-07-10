@@ -14,6 +14,8 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use App\Service\Plugin\PluginService;
 use App\Repository\RatingRepository;
+use App\Entity\User;
+use App\Repository\UserRepository;
 
 class PluginController extends AbstractController
 {
@@ -22,19 +24,25 @@ class PluginController extends AbstractController
     private $router;
     private $pluginService;
     private $ratingRepository;
+    private $userRepository;
+
+
 
     public function __construct(
         EntityManagerInterface $entityManager,
         PluginRepository $pluginRepository,
         RouterInterface $router,
         PluginService $pluginService,
-        RatingRepository $ratingRepository
+        RatingRepository $ratingRepository,
+        UserRepository $userRepository
+
     ) {
         $this->entityManager = $entityManager;
         $this->pluginRepository = $pluginRepository;
         $this->router = $router;
         $this->pluginService = $pluginService;
         $this->ratingRepository = $ratingRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -92,22 +100,45 @@ class PluginController extends AbstractController
             );
         }
 
-        return $this->render('plugins/plugin_dashboard/index.html.twig', [
+        return $this->render('plugins/admin/plugin/index.html.twig', [
             'form'            => $form->createView(),
             'plugins'         => $plugins,
             'num_of_elements' => count($plugins),
 
         ]);
     }
-
-
+    
     /**
-     * ? in this Function we can see the plugin
-     * ? @Route("/admin/plugin/show/{id}", name="app_plugin_show").
+     * ? in this Function we can see the plugins of the user
+     * ? @Route("/admin/plugin/my_plugins", name="app_my_plugins").
      */
 
-    #[Route('/admin/plugin/show/{id}', name: 'app_plugin_show')]
-    public function show(Plugin $plugin, Request $request): Response
+    #[Route('plugin/my_plugins', name: 'app_my_plugins')]
+    public function myPlugins(){
+
+     
+        $user = $this->userRepository->find(1);
+
+        /**
+         * ! you should send user as object not id from the controller
+         * ! i send it as id because i don't have the  authenticated user
+         * ? $user = $this->getUser();
+         */
+
+
+        return $this->render('plugins/user/plugin/my_plugins.html.twig', [
+            'plugins' => $user->getPlugins(),
+        ]);
+
+    }
+
+    /**
+     * ? in this Function we can install the plugin
+     * ? @Route("/admin/plugin/install/{id}", name="app_plugin_install").
+     */
+
+    #[Route('plugin/install/{id}', name: 'app_plugin_install')]
+    public function installPlugin(Plugin $plugin, Request $request ): Response
     {
         $fields = $plugin->getCredentialsFormFields();
         $credentials = $request->request->all();
@@ -116,7 +147,6 @@ class PluginController extends AbstractController
             foreach ($fields as $field) {
                 if (empty($credentials[$field])) {
                     $this->addFlash('error', 'Please fill in all the required fields');
-
                     return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
                 }
             }
@@ -141,6 +171,48 @@ class PluginController extends AbstractController
             return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
         }
 
+
+        return $this->redirectToRoute('app_my_plugins');
+    }
+
+
+    /**
+     * ? in this Function we can install the plugin
+     * ? @Route("/admin/plugin/install/{id}", name="app_plugin_install").
+     */
+
+    #[Route('plugin/uninstall/{id}', name: 'app_plugin_uninstall')]
+    public function uninstallPlugin(Plugin $plugin): Response
+    {
+        $user = 1;
+
+        /**
+         * ! you should send user as object not id from the controller
+         * ! i send it as id because i don't have the  authenticated user
+         * ? $user = $this->getUser();
+         */
+
+         try {
+            $this->pluginService->uninstallPlugin($user, $plugin);
+            $this->addFlash('success', 'Plugin Uninstalled Successfully');
+
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Plugin Uninstallation Failed');
+        }
+
+        return $this->redirectToRoute('app_my_plugins');
+    }
+
+    /**
+     * ? in this Function we can see the plugin
+     * ? @Route("/admin/plugin/show/{id}", name="app_plugin_show").
+     */
+
+    #[Route('plugin/show/{id}', name: 'app_plugin_show')]
+    public function show(Plugin $plugin, Request $request): Response
+    {
+        $fields = $plugin->getCredentialsFormFields();
+       
         $ratings = $this->ratingRepository->findRatingsWithUser();
 
         // ? Filter out ratings with empty comments
@@ -149,7 +221,7 @@ class PluginController extends AbstractController
         });
 
 
-        return $this->render('plugins/plugin_dashboard/show.html.twig', [
+        return $this->render('plugins/user/plugin/show.html.twig', [
             'plugin'      => $plugin,
             'fields'      => $fields,
             'RatingStats' => $this->pluginService->gatRatingStats($plugin),
@@ -163,7 +235,7 @@ class PluginController extends AbstractController
      * ? @Route("/admin/plugin/rate/{id}", name="app_plugin_rate").
      */
 
-    #[Route('/admin/plugin/rate/{id}', name: 'app_plugin_rate')]
+    #[Route('plugin/rate/{id}', name: 'app_plugin_rate')]
     public function rate(Plugin $plugin, Request $request): Response
     {
         $rating = $request->request->get('rating');
@@ -215,7 +287,7 @@ class PluginController extends AbstractController
             }
         }
 
-        return $this->render('plugins/plugin_dashboard/edit.html.twig', [
+        return $this->render('plugins/admin/plugin/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: PluginRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_DASHBOARD_PATH', fields: ['dashboard_path'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_DASHBOARD_PATH_NAME', fields: ['dashboard_path', 'name'])]
 #[Vich\Uploadable]
 class Plugin
 {
@@ -68,12 +68,22 @@ class Plugin
     #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'plugin')]
     private Collection $ratings;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'plugins')]
+    private Collection $user;
+
+    
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->screenShots = new ArrayCollection();
         $this->credentials = new ArrayCollection();
         $this->ratings = new ArrayCollection();
+        $this->user = new ArrayCollection();
+        
     }
 
     public function getId(): ?int
@@ -301,4 +311,32 @@ class Plugin
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        $this->user->removeElement($user);
+
+        return $this;
+    }
+
+
+
+
 }

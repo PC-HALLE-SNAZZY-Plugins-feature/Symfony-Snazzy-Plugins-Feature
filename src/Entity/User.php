@@ -54,11 +54,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $username = null;
 
+    /**
+     * @var Collection<int, Plugin>
+     */
+    #[ORM\ManyToMany(targetEntity: Plugin::class, mappedBy: 'user')]
+    private Collection $plugins;
+
+
     public function __construct()
     {
         $this->credentials = new ArrayCollection();
         $this->plugin = new ArrayCollection();
         $this->ratings = new ArrayCollection();
+        $this->plugins = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -237,4 +246,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Plugin>
+     */
+    public function getPlugins(): Collection
+    {
+        return $this->plugins;
+    }
+
+    
 }

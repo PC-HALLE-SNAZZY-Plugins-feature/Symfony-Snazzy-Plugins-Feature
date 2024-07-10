@@ -61,7 +61,7 @@ class CategoryController extends AbstractController
             );
         }
 
-        return $this->render('plugins/category/index.html.twig', [
+        return $this->render('plugins/admin/category/index.html.twig', [
             'form'            => $form->createView(),
             'categories'      => $categories,
             'num_of_elements' => count($categories),
@@ -92,7 +92,7 @@ class CategoryController extends AbstractController
             }
         }
 
-        return $this->render('plugins/category/edit.html.twig', [
+        return $this->render('plugins/admin/category/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

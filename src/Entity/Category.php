@@ -33,6 +33,7 @@ class Category
 
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->plugins = new ArrayCollection();
     }
 

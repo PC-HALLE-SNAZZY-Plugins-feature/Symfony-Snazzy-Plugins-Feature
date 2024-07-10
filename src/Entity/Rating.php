@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RatingRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_RATING_USER_PLUGIN', fields: ['user','plugin'])]
 class Rating
 {
     #[ORM\Id]

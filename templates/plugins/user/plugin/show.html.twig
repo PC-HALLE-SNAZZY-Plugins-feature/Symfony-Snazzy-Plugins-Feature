@@ -5,39 +5,43 @@
 
 {% block body %}
 
-	{% for flashMessage in app.flashes('success') %}
-		<div id="alert-3" class="flex items-center p-4 mb-4 text-white rounded-lg bg-green-600 dark:bg-gray-800 dark:text-green-400" role="alert">
-			<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-				<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-			</svg>
-			<div class="ms-3 text-sm font-medium">
-				{{ flashMessage }}
-			</div>
-			<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-white rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
-				<span class="sr-only">Close</span>
-				<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
-					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-				</svg>
-			</button>
-		</div>
-	{% endfor %}
-	{% for flashMessage in app.flashes('error') %}
-		<div id="alert-2" class="flex items-center p-4 mb-4 text-white rounded-lg bg-red-600 dark:bg-gray-800 dark:text-red-400" role="alert">
-			<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-				<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-			</svg>
-			<div class="ms-3 text-sm font-medium">
-				{{ flashMessage }}
-			</div>
-			<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-white rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-2" aria-label="Close">
-				<span class="sr-only">Close</span>
-				<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
-					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-				</svg>
-			</button>
-		</div>
-	{% endfor %}
+
 	<!-- Start Content -->
+
+	<div class="container mt-5">
+		{% for flashMessage in app.flashes('success') %}
+			<div id="alert-3" class="flex items-center p-4 mb-4 text-white rounded-lg bg-green-600 dark:bg-gray-800 dark:text-green-400" role="alert">
+				<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+					<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+				</svg>
+				<div class="ms-3 text-sm font-medium">
+					{{ flashMessage }}
+				</div>
+				<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-white rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+					<span class="sr-only">Close</span>
+					<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+					</svg>
+				</button>
+			</div>
+		{% endfor %}
+		{% for flashMessage in app.flashes('error') %}
+			<div id="alert-2" class="flex items-center p-4 mb-4 text-gray-600 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+				<svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+					<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+				</svg>
+				<div class="ms-3 text-sm font-medium">
+					{{ flashMessage }}
+				</div>
+				<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-white rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-2" aria-label="Close">
+					<span class="sr-only">Close</span>
+					<svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+					</svg>
+				</button>
+			</div>
+		{% endfor %}
+	</div>
 
 	<div id="plugin-container" class=" flex flex-wrap flex-col md:flex-row items-center justify-start">
 		<div id="cardplugin" class="flex flex-col lg:flex-row lg:m-[1rem] mb-5 lg:space-x-6 p-5 md:p-10 justify-between w-full gap-5 lg:gap-0 ">
@@ -349,217 +353,217 @@
 			</div>
 
 			{# <div class="SimilarPluginssliders" style="width:100%;  overflow-x: scroll;">
-				<div class="flex transition-transform duration-500 ease-in-out" id="carousel">
-					<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-4 my-6">
-						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
-							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.5chsv8aD5xQeK02HUXPqLQHaEK?rs=1&pid=ImgDetMain);"></div>
-							<div class="flex flex-grow">
-								<div class="triangle"></div>
-								<div class="flex flex-col justify-between  pb-3 bg-white ">
-									<div>
-										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
-										<p class="block  text-xs leading-tight  text-gray-400 ">
-											What Zombies Can Teach You About Food</p>
-
-									</div>
-									<div class="flex justify-between">
-										<div class="flex items-end gap-1">
-											<div class="flex h-full justify-start items-end gap-1">
-												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
-												<span class=" text-gray-400 text-xs p-0">54k</span>
+							<div class="flex transition-transform duration-500 ease-in-out" id="carousel">
+								<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-4 my-6">
+									<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+										<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.5chsv8aD5xQeK02HUXPqLQHaEK?rs=1&pid=ImgDetMain);"></div>
+										<div class="flex flex-grow">
+											<div class="triangle"></div>
+											<div class="flex flex-col justify-between  pb-3 bg-white ">
+												<div>
+													<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																															                            Schemas</a>
+													<p class="block  text-xs leading-tight  text-gray-400 ">
+														What Zombies Can Teach You About Food</p>
+			
+												</div>
+												<div class="flex justify-between">
+													<div class="flex items-end gap-1">
+														<div class="flex h-full justify-start items-end gap-1">
+															<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+															<span class=" text-gray-400 text-xs p-0">54k</span>
+														</div>
+													</div>
+													<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+			
+												</div>
 											</div>
 										</div>
-										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
-
+									</div>
+			
+									<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+										<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://i0.wp.com/eobasi.com/wp-content/uploads/2018/05/install-oxwall-plugins.png?resize=768%2C379&ssl=1);"></div>
+										<div class="flex flex-grow">
+											<div class="triangle"></div>
+											<div class="flex flex-col justify-between  pb-3 bg-white ">
+												<div>
+													<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																															                            Schemas</a>
+													<p class="block  text-xs leading-tight  text-gray-400 ">
+														What Zombies Can Teach You About Food</p>
+			
+												</div>
+												<div class="flex justify-between">
+													<div class="flex items-end gap-1">
+														<div class="flex h-full justify-start items-end gap-1">
+															<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+															<span class=" text-gray-400 text-xs p-0">54k</span>
+														</div>
+													</div>
+													<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+			
+												</div>
+											</div>
+										</div>
+									</div>
+			
+									<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+										<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://wpshuffle.com/wp-content/uploads/2021/04/how-to-install-plugin.jpg);"></div>
+										<div class="flex flex-grow">
+											<div class="triangle"></div>
+											<div class="flex flex-col justify-between  pb-3 bg-white ">
+												<div>
+													<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																															                            Schemas</a>
+													<p class="block  text-xs leading-tight  text-gray-400 ">
+														What Zombies Can Teach You About Food</p>
+			
+												</div>
+												<div class="flex justify-between">
+													<div class="flex items-end gap-1">
+														<div class="flex h-full justify-start items-end gap-1">
+															<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+															<span class=" text-gray-400 text-xs p-0">54k</span>
+														</div>
+													</div>
+													<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+			
+												</div>
+											</div>
+										</div>
+									</div>
+			
+									<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+										<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://user-meta.com/wp-content/blogs.dir/2/files/2022/12/How-to-upload-wordpress-plugin-1.png);"></div>
+										<div class="flex flex-grow">
+											<div class="triangle"></div>
+											<div class="flex flex-col justify-between  pb-3 bg-white ">
+												<div>
+													<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																															                            Schemas</a>
+													<p class="block  text-xs leading-tight  text-gray-400 ">
+														What Zombies Can Teach You About Food</p>
+			
+												</div>
+												<div class="flex justify-between">
+													<div class="flex items-end gap-1">
+														<div class="flex h-full justify-start items-end gap-1">
+															<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+															<span class=" text-gray-400 text-xs p-0">54k</span>
+														</div>
+													</div>
+													<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+			
+												</div>
+											</div>
+										</div>
+									</div>
+			
+									<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+										<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.t5ZjYXXhiZjXmZnA2-ZM9QHaEK?w=1280&h=720&rs=1&pid=ImgDetMain);"></div>
+										<div class="flex flex-grow">
+											<div class="triangle"></div>
+											<div class="flex flex-col justify-between  pb-3 bg-white ">
+												<div>
+													<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																															                            Schemas</a>
+													<p class="block  text-xs leading-tight  text-gray-400 ">
+														What Zombies Can Teach You About Food</p>
+			
+												</div>
+												<div class="flex justify-between">
+													<div class="flex items-end gap-1">
+														<div class="flex h-full justify-start items-end gap-1">
+															<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+															<span class=" text-gray-400 text-xs p-0">54k</span>
+														</div>
+													</div>
+													<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+			
+												</div>
+											</div>
+										</div>
+									</div>
+			
+									<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+										<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.04yES9crX5XfEkXoTqgQSgHaHt?rs=1&pid=ImgDetMain);"></div>
+										<div class="flex flex-grow">
+											<div class="triangle"></div>
+											<div class="flex flex-col justify-between  pb-3 bg-white ">
+												<div>
+													<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																															                            Schemas</a>
+													<p class="block  text-xs leading-tight  text-gray-400 ">
+														What Zombies Can Teach You About Food</p>
+			
+												</div>
+												<div class="flex justify-between">
+													<div class="flex items-end gap-1">
+														<div class="flex h-full justify-start items-end gap-1">
+															<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+															<span class=" text-gray-400 text-xs p-0">54k</span>
+														</div>
+													</div>
+													<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+			
+												</div>
+											</div>
+										</div>
+									</div>
+			
+									<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+										<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/R.b3a46e6760afe03b45f87b841402ea2b?rik=pGG3sg9kQ6loew&pid=ImgRaw&r=0);"></div>
+										<div class="flex flex-grow">
+											<div class="triangle"></div>
+											<div class="flex flex-col justify-between  pb-3 bg-white ">
+												<div>
+													<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																															                            Schemas</a>
+													<p class="block  text-xs leading-tight  text-gray-400 ">
+														What Zombies Can Teach You About Food</p>
+			
+												</div>
+												<div class="flex justify-between">
+													<div class="flex items-end gap-1">
+														<div class="flex h-full justify-start items-end gap-1">
+															<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+															<span class=" text-gray-400 text-xs p-0">54k</span>
+														</div>
+													</div>
+													<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+			
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
+										<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/R.b3a46e6760afe03b45f87b841402ea2b?rik=pGG3sg9kQ6loew&pid=ImgRaw&r=0);"></div>
+										<div class="flex flex-grow">
+											<div class="triangle"></div>
+											<div class="flex flex-col justify-between  pb-3 bg-white ">
+												<div>
+													<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																															                            Schemas</a>
+													<p class="block  text-xs leading-tight  text-gray-400 ">
+														What Zombies Can Teach You About Food</p>
+			
+												</div>
+												<div class="flex justify-between">
+													<div class="flex items-end gap-1">
+														<div class="flex h-full justify-start items-end gap-1">
+															<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
+															<span class=" text-gray-400 text-xs p-0">54k</span>
+														</div>
+													</div>
+													<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
+			
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-
-						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
-							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://i0.wp.com/eobasi.com/wp-content/uploads/2018/05/install-oxwall-plugins.png?resize=768%2C379&ssl=1);"></div>
-							<div class="flex flex-grow">
-								<div class="triangle"></div>
-								<div class="flex flex-col justify-between  pb-3 bg-white ">
-									<div>
-										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
-										<p class="block  text-xs leading-tight  text-gray-400 ">
-											What Zombies Can Teach You About Food</p>
-
-									</div>
-									<div class="flex justify-between">
-										<div class="flex items-end gap-1">
-											<div class="flex h-full justify-start items-end gap-1">
-												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
-												<span class=" text-gray-400 text-xs p-0">54k</span>
-											</div>
-										</div>
-										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
-							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://wpshuffle.com/wp-content/uploads/2021/04/how-to-install-plugin.jpg);"></div>
-							<div class="flex flex-grow">
-								<div class="triangle"></div>
-								<div class="flex flex-col justify-between  pb-3 bg-white ">
-									<div>
-										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
-										<p class="block  text-xs leading-tight  text-gray-400 ">
-											What Zombies Can Teach You About Food</p>
-
-									</div>
-									<div class="flex justify-between">
-										<div class="flex items-end gap-1">
-											<div class="flex h-full justify-start items-end gap-1">
-												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
-												<span class=" text-gray-400 text-xs p-0">54k</span>
-											</div>
-										</div>
-										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
-							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://user-meta.com/wp-content/blogs.dir/2/files/2022/12/How-to-upload-wordpress-plugin-1.png);"></div>
-							<div class="flex flex-grow">
-								<div class="triangle"></div>
-								<div class="flex flex-col justify-between  pb-3 bg-white ">
-									<div>
-										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
-										<p class="block  text-xs leading-tight  text-gray-400 ">
-											What Zombies Can Teach You About Food</p>
-
-									</div>
-									<div class="flex justify-between">
-										<div class="flex items-end gap-1">
-											<div class="flex h-full justify-start items-end gap-1">
-												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
-												<span class=" text-gray-400 text-xs p-0">54k</span>
-											</div>
-										</div>
-										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
-							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.t5ZjYXXhiZjXmZnA2-ZM9QHaEK?w=1280&h=720&rs=1&pid=ImgDetMain);"></div>
-							<div class="flex flex-grow">
-								<div class="triangle"></div>
-								<div class="flex flex-col justify-between  pb-3 bg-white ">
-									<div>
-										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
-										<p class="block  text-xs leading-tight  text-gray-400 ">
-											What Zombies Can Teach You About Food</p>
-
-									</div>
-									<div class="flex justify-between">
-										<div class="flex items-end gap-1">
-											<div class="flex h-full justify-start items-end gap-1">
-												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
-												<span class=" text-gray-400 text-xs p-0">54k</span>
-											</div>
-										</div>
-										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
-							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/OIP.04yES9crX5XfEkXoTqgQSgHaHt?rs=1&pid=ImgDetMain);"></div>
-							<div class="flex flex-grow">
-								<div class="triangle"></div>
-								<div class="flex flex-col justify-between  pb-3 bg-white ">
-									<div>
-										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
-										<p class="block  text-xs leading-tight  text-gray-400 ">
-											What Zombies Can Teach You About Food</p>
-
-									</div>
-									<div class="flex justify-between">
-										<div class="flex items-end gap-1">
-											<div class="flex h-full justify-start items-end gap-1">
-												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
-												<span class=" text-gray-400 text-xs p-0">54k</span>
-											</div>
-										</div>
-										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
-							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/R.b3a46e6760afe03b45f87b841402ea2b?rik=pGG3sg9kQ6loew&pid=ImgRaw&r=0);"></div>
-							<div class="flex flex-grow">
-								<div class="triangle"></div>
-								<div class="flex flex-col justify-between  pb-3 bg-white ">
-									<div>
-										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
-										<p class="block  text-xs leading-tight  text-gray-400 ">
-											What Zombies Can Teach You About Food</p>
-
-									</div>
-									<div class="flex justify-between">
-										<div class="flex items-end gap-1">
-											<div class="flex h-full justify-start items-end gap-1">
-												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
-												<span class=" text-gray-400 text-xs p-0">54k</span>
-											</div>
-										</div>
-										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="h-64 p-2  card  flex flex-col border border-gray-200 ">
-							<div class="flex justify-center W-full h-1/2 py-2 bg-center bg-cover  bg-no-repeat bg-gray-300" style="background-image: url(https://th.bing.com/th/id/R.b3a46e6760afe03b45f87b841402ea2b?rik=pGG3sg9kQ6loew&pid=ImgRaw&r=0);"></div>
-							<div class="flex flex-grow">
-								<div class="triangle"></div>
-								<div class="flex flex-col justify-between  pb-3 bg-white ">
-									<div>
-										<a href="#" class="inline-block mb-1  text-sm font-bold text-black  capitalize  ">Reliable
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																												                            Schemas</a>
-										<p class="block  text-xs leading-tight  text-gray-400 ">
-											What Zombies Can Teach You About Food</p>
-
-									</div>
-									<div class="flex justify-between">
-										<div class="flex items-end gap-1">
-											<div class="flex h-full justify-start items-end gap-1">
-												<img src="{{ asset('images/svg/download.svg') }}" class="pb-[3px]" alt="download">
-												<span class=" text-gray-400 text-xs p-0">54k</span>
-											</div>
-										</div>
-										<button class="w-16 rounded-md bg-black text-white text-xs px-2 mt-3 py-1 ">install</button>
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> #}
+						</div> #}
 		</div>
 
 
@@ -585,7 +589,7 @@
 			</div>
 			<!-- Modal body -->
 			<div class="px-4 py-3">
-				<form action="" method="post">
+				<form action="{{ path('app_plugin_install' , {id:plugin.id}) }}" method="post">
 
 					{% for field in fields %}
 						<label for="field" class="block text-sm font-medium text-gray-900 my-1">{{ field }}</label>
@@ -629,7 +633,7 @@
 			<div class="p-4 pt-0 space-y-4">
 				<p class="text-sm text-base leading-relaxed text-gray-500 dark:text-gray-400">
 					Reviews are public and include your account and device info
-																																																							Everyone can see your Snazzy Account name and photo associated with your review. Past edits are visible to users unless you delete your review.
+																																																												Everyone can see your Snazzy Account name and photo associated with your review. Past edits are visible to users unless you delete your review.
 				</p>
 				<form action="{{ path('app_plugin_rate' , { id:plugin.id }) }}" method="post">
 					<article class="flex flex-col items-center gap-2 w-full">

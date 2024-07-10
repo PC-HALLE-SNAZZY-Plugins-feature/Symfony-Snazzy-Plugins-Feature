@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CredentialsRepository::class)]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USER_PLUGIN', fields: ['plugin', 'user'])]
 class Credentials
 {
     #[ORM\Id]
