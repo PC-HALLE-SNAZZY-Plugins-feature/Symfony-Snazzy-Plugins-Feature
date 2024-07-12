@@ -16,6 +16,8 @@ use App\Service\Plugin\PluginService;
 use App\Repository\RatingRepository;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Repository\CategoryRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PluginController extends AbstractController
 {
@@ -24,6 +26,7 @@ class PluginController extends AbstractController
     private $router;
     private $pluginService;
     private $ratingRepository;
+    private $categoryRepository;
     private $userRepository;
 
 
@@ -34,8 +37,8 @@ class PluginController extends AbstractController
         RouterInterface $router,
         PluginService $pluginService,
         RatingRepository $ratingRepository,
+        CategoryRepository $categoryRepository,
         UserRepository $userRepository
-
     ) {
         $this->entityManager = $entityManager;
         $this->pluginRepository = $pluginRepository;
@@ -43,6 +46,7 @@ class PluginController extends AbstractController
         $this->pluginService = $pluginService;
         $this->ratingRepository = $ratingRepository;
         $this->userRepository = $userRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -107,30 +111,52 @@ class PluginController extends AbstractController
 
         ]);
     }
-    
+
+
     /**
      * ? in this Function we can see the plugins of the user
      * ? @Route("/admin/plugin/my_plugins", name="app_my_plugins").
      */
 
     #[Route('plugin/my_plugins', name: 'app_my_plugins')]
-    public function myPlugins(){
-
-     
-        $user = $this->userRepository->find(1);
-
-        /**
-         * ! you should send user as object not id from the controller
-         * ! i send it as id because i don't have the  authenticated user
-         * ? $user = $this->getUser();
-         */
-
-
+    public function myPlugins()
+    {
         return $this->render('plugins/user/plugin/my_plugins.html.twig', [
-            'plugins' => $user->getPlugins(),
+            'categories' => $this->categoryRepository->findAll(),
         ]);
-
     }
+
+    /**
+     * ? in this Function we can list the plugins
+     * ? @Route("plugin/list", name="app_plugin_list").
+     */
+
+    #[Route('plugin/my_plugin/list', name: 'app_plugin_list')]
+    public function listPlugins(Request $request): JsonResponse
+    {
+        $searchTerm = $request->query->get('searchTerm') ?? null;
+        $category = $request->query->get('category');
+
+
+        $plugins = $this->pluginRepository->findMyPluginsBySearchTerm('1', $searchTerm, $category);
+
+        // Prepare data to send back
+        $data = [];
+        foreach ($plugins as $plugin) {
+            $data[] = [
+                'id'             => $plugin->getId(),
+                'name'           => $plugin->getName(),
+                'description'    => $plugin->getDescription(),
+                'dashboard_path' => $this->generateUrl($plugin->getDashboardPath()),
+                'uninstall_path' => $this->generateUrl('app_plugin_uninstall', ['id' => $plugin->getId()]),
+                'image_name'     => $plugin->getImageName(),
+                // 'plugin'        => $this->pluginRepository->find($plugin->getId()),
+            ];
+        }
+
+        return $this->json($data);
+    }
+
 
     /**
      * ? in this Function we can install the plugin
@@ -138,7 +164,7 @@ class PluginController extends AbstractController
      */
 
     #[Route('plugin/install/{id}', name: 'app_plugin_install')]
-    public function installPlugin(Plugin $plugin, Request $request ): Response
+    public function installPlugin(Plugin $plugin, Request $request): Response
     {
         $fields = $plugin->getCredentialsFormFields();
         $credentials = $request->request->all();
@@ -147,12 +173,12 @@ class PluginController extends AbstractController
             foreach ($fields as $field) {
                 if (empty($credentials[$field])) {
                     $this->addFlash('error', 'Please fill in all the required fields');
+
                     return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
                 }
             }
 
             try {
-
                 $user = 1;
 
                 /**
@@ -160,15 +186,12 @@ class PluginController extends AbstractController
                  * ! i send it as id because i don't have the  authenticated user
                  * ? $user = $this->getUser();
                  */
-                
+
                 $this->pluginService->saveCredentials($user, $plugin, $credentials);
                 $this->addFlash('success', 'Plugin Installed Successfully');
-
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Plugin Installation Failed');
+                $this->addFlash('error', 'Plugin Installation Failed' . $e->getMessage());
             }
-
-            return $this->redirectToRoute('app_plugin_show', ['id' => $plugin->getId()]);
         }
 
 
@@ -192,10 +215,9 @@ class PluginController extends AbstractController
          * ? $user = $this->getUser();
          */
 
-         try {
+        try {
             $this->pluginService->uninstallPlugin($user, $plugin);
             $this->addFlash('success', 'Plugin Uninstalled Successfully');
-
         } catch (\Exception $e) {
             $this->addFlash('error', 'Plugin Uninstallation Failed');
         }
@@ -212,7 +234,7 @@ class PluginController extends AbstractController
     public function show(Plugin $plugin, Request $request): Response
     {
         $fields = $plugin->getCredentialsFormFields();
-       
+
         $ratings = $this->ratingRepository->findRatingsWithUser();
 
         // ? Filter out ratings with empty comments

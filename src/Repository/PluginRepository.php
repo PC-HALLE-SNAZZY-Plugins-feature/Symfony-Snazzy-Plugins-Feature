@@ -46,6 +46,34 @@ class PluginRepository extends ServiceEntityRepository
     }
 
 
+    public function findMyPluginsBySearchTerm($userId, $searchTerm = '', $category = '')
+    {
+        $qb = $this->createQueryBuilder('p')
+        ->innerJoin('p.user', 'u')
+        ->where('u.id = :userId')
+        ->andWhere('p.name LIKE :name')
+        ->setParameter('userId', $userId)
+        ->setParameter('name', '%' . $searchTerm . '%')
+        ->orderBy('p.name', 'ASC');
+
+        if (!empty($category) && $category != 'all') {
+            $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.user', 'u')
+            ->where('u.id = :userId')
+            ->andWhere('p.name LIKE :name')
+            ->setParameter('userId', $userId)
+            ->setParameter('name', '%' . $searchTerm . '%')
+            ->orderBy('p.name', 'ASC')
+            ->andWhere('p.category = :category')
+            ->setParameter('category', $category);
+        }
+
+        return $qb->getQuery()
+         ->getResult();
+    }
+
+
+
     //    /**
     //     * @return Plugin[] Returns an array of Plugin objects
     //     */

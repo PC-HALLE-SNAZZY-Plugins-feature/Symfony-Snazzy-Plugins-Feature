@@ -16,6 +16,17 @@ class CredentialsRepository extends ServiceEntityRepository
         parent::__construct($registry, Credentials::class);
     }
 
+    public function findByUserAndPlugin($user, $plugin): ?Credentials
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.user = :user')
+            ->andWhere('c.plugin = :plugin')
+            ->setParameter('user', $user)
+            ->setParameter('plugin', $plugin)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return Credentials[] Returns an array of Credentials objects
     //     */

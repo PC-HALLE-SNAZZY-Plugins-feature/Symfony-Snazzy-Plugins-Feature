@@ -67,7 +67,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->plugin = new ArrayCollection();
         $this->ratings = new ArrayCollection();
         $this->plugins = new ArrayCollection();
-       
     }
 
     public function getId(): ?int
@@ -254,6 +253,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->plugins;
     }
-
-    
 }

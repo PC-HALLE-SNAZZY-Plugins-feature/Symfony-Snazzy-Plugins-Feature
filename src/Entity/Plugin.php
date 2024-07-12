@@ -74,7 +74,7 @@ class Plugin
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'plugins')]
     private Collection $user;
 
-    
+
 
     public function __construct()
     {
@@ -83,7 +83,6 @@ class Plugin
         $this->credentials = new ArrayCollection();
         $this->ratings = new ArrayCollection();
         $this->user = new ArrayCollection();
-        
     }
 
     public function getId(): ?int
@@ -335,8 +334,4 @@ class Plugin
 
         return $this;
     }
-
-
-
-
 }

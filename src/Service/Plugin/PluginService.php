@@ -22,12 +22,12 @@ class PluginService
     /**
      * ! you should use the first parameter as object not id when you call this function from the controller
      * ? public function saveCredentials(object $user, object $plugin, array $credentials_data)
-     * 
+     *
      * @param object $user
      * @param object $plugin
      * @param array $credentials_data
      * @return void
-     */ 
+     */
 
     public function saveCredentials($user, object $plugin, array $credentials_data)
     {
@@ -54,16 +54,16 @@ class PluginService
             $credentials->setCredentials($credentials_object);
 
             // ? Any plugin that has credentials should have a service that implements the verifyCredentials method
-            if (!$this->verifyCredentials($plugin, $credentials_object)) 
+            if (!$this->verifyCredentials($plugin, $credentials_object)) {
                 throw new \Exception('Credentials Verification Failed');
-            
+            }
+
             // ? install the plugin to the user
             $plugin->addUser($user);
 
 
             $this->entityManager->persist($credentials);
             $this->entityManager->flush();
-
         } catch (\Exception $e) {
             throw new \Exception('Credentials Saving Failed');
         }
@@ -72,7 +72,7 @@ class PluginService
     /**
      * ! you should use the first parameter as object not id when you call this function from the controller
      * ? public function ratePlugin(object $user, object $plugin, int $rating, string $review = null)
-     * 
+     *
      * @param object $user
      * @param object $plugin
      * @param int $rating
@@ -104,13 +104,13 @@ class PluginService
 
     /**
      * ? this function will return the rating stats for the plugin
-     * 
+     *
      * @param object $plugin
      * @return array
-     * 
+     *
      */
 
-    public function gatRatingStats($plugin) : array
+    public function gatRatingStats($plugin): array
     {
         $ratings = $plugin->getRatings();
 
@@ -221,17 +221,16 @@ class PluginService
 
     /**
      * ? this function will verify the credentials of the plugin
-     * 
+     *
      * @param object $plugin
      * @param object $credentials_object
      * @return bool
-     * 
+     *
      */
 
     public function verifyCredentials($plugin, $credentials_object)
     {
-
-        /** 
+        /**
          * ! you should implement the plugin service alias in Services.yaml using its name by the following steps:
          * ! use snake_case
          * ! Concatenate the plugin name with _service
@@ -265,11 +264,11 @@ class PluginService
      * ? this function will uninstall the plugin from the user
      * ! you should use the first parameter as object not id when you call this function from the controller
      * ? public function uninstallPlugin(object $user, object $plugin)
-     * 
+     *
      * @param object $plugin
      * @param object $user
      * @return void
-     * 
+     *
      */
 
     public function uninstallPlugin($user, object $plugin)
@@ -279,13 +278,24 @@ class PluginService
         $user = $this->entityManager->getRepository(User::class)->find($user);
         // ! -------------------------------------------------------------------
 
+        if (!$user) {
+            throw new \Exception('User not found');
+        }
+
         try {
-            $plugin->removeUser($user);
-            $this->entityManager->flush();
+            $credentials = $this->entityManager->getRepository(Credentials::class)->findByUserAndPlugin($user, $plugin);
+
+            if ($credentials) {
+                $plugin->removeUser($user);
+
+                $this->entityManager->remove($credentials);
+
+                $this->entityManager->flush();
+            } else {
+                throw new \Exception('Credentials not found'); // Handle case where credentials are not found
+            }
         } catch (\Exception $e) {
-            throw new \Exception('Uninstall Plugin Failed');
+            throw new \Exception('Uninstall Plugin Failed: ' . $e->getMessage());
         }
     }
-
-
 }

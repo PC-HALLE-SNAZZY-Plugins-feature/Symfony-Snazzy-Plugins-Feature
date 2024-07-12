@@ -10,12 +10,11 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-      
         $user = new User();
         $user->setEmail('test@gmail.com');
         $user->setPassword('test');
-        $user->setRoles(["ROLE_ADMIN"]);
-        $user->setUsername("test");
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setUsername('test');
 
 
         $manager->persist($user);
