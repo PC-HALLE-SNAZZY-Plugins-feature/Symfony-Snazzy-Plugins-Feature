@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\plugin;
+namespace App\Controller\Plugin;
 
 use App\Entity\Plugin;
 use App\Form\PluginType;
@@ -18,6 +18,8 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Flasher\Prime\FlasherInterface;
+
 
 class PluginController extends AbstractController
 {
@@ -190,7 +192,7 @@ class PluginController extends AbstractController
                 $this->pluginService->saveCredentials($user, $plugin, $credentials);
                 $this->addFlash('success', 'Plugin Installed Successfully');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Plugin Installation Failed' . $e->getMessage());
+                $this->addFlash('error', 'You already installed this plugin');
             }
         }
 
@@ -272,7 +274,7 @@ class PluginController extends AbstractController
                 $this->pluginService->ratePlugin($user, $plugin, $rating, $review);
                 $this->addFlash('success', 'Plugin Rated Successfully');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'Plugin Rating Failed');
+                $this->addFlash('error', 'you already rated this plugin');
             }
         }
 

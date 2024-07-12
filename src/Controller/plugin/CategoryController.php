@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\plugin;
+namespace App\Controller\Plugin;
 
 use App\Entity\Category;
 use App\Form\CategoryType;
@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Flasher\Prime\FlasherInterface;
+
 
 class CategoryController extends AbstractController
 {
